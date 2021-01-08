@@ -2,6 +2,7 @@ import Player from "./Player";
 
 import { Server } from "socket.io";
 import { Event } from "./protocols";
+import { Profile } from "../models/Profile";
 
 const text = `Lorem Ipsum is typesetting industry.`;
 
@@ -93,6 +94,14 @@ class Room {
       username: player.username,
       time: player.getTimeTaken(),
     });
+
+    Profile.updateProfile(
+      playerName,
+      1,
+      text.length,
+      text.split(" ").length,
+      player.getTimeTaken()
+    ).catch((e) => console.log(e));
   }
 }
 

@@ -30,8 +30,11 @@ interface EndPosition {
   time: number;
 }
 
-const colors = ["red", "green", "blue", "yellow", "purple"];
-const color = colors[Math.floor(Math.random() * colors.length)];
+const generateNumber255 = () => {
+  return (Math.floor(Math.random() * 100) + 155).toString();
+};
+
+const color = `rgb(${generateNumber255()}, ${generateNumber255()}, ${generateNumber255()})`;
 const names = [
   "Bob",
   "The Bobz",

@@ -14,8 +14,8 @@ export interface IProfile {
 export interface ProfileDocument extends IProfile, Document {}
 
 export interface ProfileModel extends Model<ProfileDocument> {
-  findProfileByUsername(username: string): Promise<ProfileModel | undefined>;
-  findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
+  findProfileByUsername(username: string): Promise<ProfileDocument | undefined>;
+  findProfileByUserId(id: string): Promise<ProfileDocument | undefined>;
   initializeUser(id: string): void;
   updateProfile(
     username: string,
@@ -87,13 +87,13 @@ profileSchema.statics.initializeUser = async function (
 
 profileSchema.statics.updateProfile = async function (
   this: Model<ProfileDocument>,
-  user: string,
+  username: string,
   totalAttempts: number,
   totalCharacters: number,
   totalWords: number,
   totalTime: number
 ): Promise<ProfileDocument> {
-  const profileExists = await Profile.findOne({ user });
+  const profileExists = await Profile.findProfileByUsername(username);
   if (!profileExists) {
     throw new Error("invalid user id provided.");
   }
