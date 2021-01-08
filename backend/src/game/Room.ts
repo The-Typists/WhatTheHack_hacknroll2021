@@ -5,13 +5,13 @@ import { Event } from "./protocols";
 import { Profile } from "../models/Profile";
 
 const text = `package org.arpit.java2blog;
- 
+
 import java.util.Scanner;
- 
+
 public class FizzBuzzMain {
- 
+
 	public static void main(String[] args) {
- 
+
 		Scanner s = new Scanner(System.in);
 		System.out.println("Enter number:");
 		int n = s.nextInt();
@@ -31,7 +31,6 @@ public class FizzBuzzMain {
 		s.close();
 	}
 }`;
-
 /**
  * Room represents the game room that users belong in.
  */
