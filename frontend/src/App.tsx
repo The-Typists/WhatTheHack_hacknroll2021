@@ -37,7 +37,6 @@ function App() {
     );
   }
 
-  return <Home />;
   if (!token) {
     return (
       <Router>
