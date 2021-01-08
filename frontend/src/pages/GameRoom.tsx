@@ -25,6 +25,11 @@ interface StartGame {
   positions: Position[];
 }
 
+interface EndPosition {
+  username: string;
+  time: number;
+}
+
 const colors = ["red", "green", "blue", "yellow", "purple"];
 const color = colors[Math.floor(Math.random() * colors.length)];
 const names = [
@@ -46,6 +51,7 @@ const GameRoom = () => {
   // For the game
   const [positions, setPositions] = useState<Position[]>([]);
   const [text, setText] = useState<string>("");
+  const [leaderboard, setLeaderboard] = useState<EndPosition[]>([]);
 
   useEffect(() => {
     if (socket) {
@@ -70,7 +76,6 @@ const GameRoom = () => {
       });
 
       socket.on("send-position", (pos: Position) => {
-        console.log(pos);
         setPositions((positions) =>
           positions.map((position) => {
             if (position.username === pos.username) return pos;
@@ -78,6 +83,11 @@ const GameRoom = () => {
             return position;
           })
         );
+      });
+
+      socket.on("player-finish-game", (end: EndPosition) => {
+        console.log(end);
+        setLeaderboard([...leaderboard, end]);
       });
     }
   }, [socket]);

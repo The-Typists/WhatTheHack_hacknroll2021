@@ -35,7 +35,6 @@ export function CodeBox(props: Props) {
   });
 
   useEffect(() => {
-    console.log(userPointer);
     if (userPointer === 1) {
       socket?.emit("player-start-game", { roomCode, name });
       console.log("Start");
