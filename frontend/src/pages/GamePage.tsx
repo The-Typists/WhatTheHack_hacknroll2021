@@ -19,7 +19,7 @@ function GamePage() {
   );
 }
 
-const text = `package org.arpit.java2blog;
+const text_ = `package org.arpit.java2blog;
 
 import java.util.Scanner;
 
@@ -52,49 +52,56 @@ function PracticeBox(props: any) {
   const [ptr, setPtr] = useState(0);
 
   const { elapsedTime, resetTimer, startTimer, stopTimer } = useStopwatch();
+  const text = text_.replaceAll("\t", " ");
+  return (
+    <div
+      className={"container"}
+      style={{ margin: style.margin }}
+      onKeyDown={(e) => {
+        e.preventDefault();
+        if (ptr == 0) {
+          startTimer();
+        }
+        const isCorrectKeyPress =
+          e.key == text[ptr] ||
+          (e.key === "Enter" && text[ptr] === "\n") ||
+          (e.key === "Tab" && text[ptr] === "\t");
 
-    return (
-        <div className={"container"} style={{ margin: style.margin }}
-             onKeyDown={(e) => {
-                 if (ptr == 0) {
-                     startTimer()
-                 }
-                 const isCorrectKeyPress =
-                     e.key == text[ptr] ||
-                     (e.key == "Enter" && text[ptr] == "\n") ||
-                     (e.key == "Enter" && text[ptr] == " ");
+        if (isCorrectKeyPress) {
+          setPtr(ptr + 1);
+          if (ptr + 2 == text.length) stopTimer();
+        }
+      }}
+      tabIndex={0}
+    >
+      <p style={{ whiteSpace: "pre-wrap" }}>
+        <span style={{ color: "red" }}>{text.slice(0, ptr)}</span>
+        <span style={{ backgroundColor: "#FFE0AB" }}>{text[ptr]}</span>
+        <span>{text.slice(ptr + 1)}</span>
+      </p>
 
-                 if(isCorrectKeyPress) {
-                     setPtr(ptr + 1);
-                     if(ptr + 2 == text.length) stopTimer()
-
-                 }
-             }}
-             tabIndex={0}
-        >
-            <p style={{ whiteSpace: "pre-wrap"}}>
-
-                <span style={{color:"red"}}>{text.slice(0,ptr)}</span>
-                <span style={{backgroundColor:"#FFE0AB"}}>{text[ptr]}</span>
-                <span>{text.slice(ptr+1)}</span>
-            </p>
-
-            <p>---------------------------</p>
-            <p>Time  Elapsed : {elapsedTime.toFixed(1)}</p>
-            <p>WPM : {((text.slice(0,ptr).split(" ").length) / elapsedTime * 60).toFixed(0)}</p>
-            <p>---------------------------</p>
-            <button onClick={() => {
-                setPtr(0)
-                resetTimer()
-            }
-            }>Reset</button>
-        </div>
-    );
+      <p>---------------------------</p>
+      <p>Time Elapsed : {elapsedTime.toFixed(1)}</p>
+      <p>
+        WPM :{" "}
+        {((text.slice(0, ptr).split(" ").length / elapsedTime) * 60).toFixed(0)}
+      </p>
+      <p>---------------------------</p>
+      <button
+        onClick={() => {
+          setPtr(0);
+          resetTimer();
+        }}
+      >
+        Reset
+      </button>
+    </div>
+  );
 }
 
 export const useTimer = () => {
-    const [isRunning, setIsRunning] = useState(false);
-    const [elapsedTime, setElapsedTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;

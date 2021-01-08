@@ -44,6 +44,7 @@ export function CodeBox(props: Props) {
       socket?.emit("player-finish-game", { roomCode, name, text });
       console.log("End");
     }
+    // console.log(`At ${text[userPointer]}, next is ${text[userPointer + 1]}`);
   }, [userPointer]);
 
   useEffect(() => {
@@ -68,9 +69,12 @@ export function CodeBox(props: Props) {
       className="container"
       style={{ marginTop: "5rem", marginLeft: "auto", marginRight: "auto" }}
       onKeyDown={(e) => {
+        e.preventDefault();
+        console.log(e.key);
         const isCorrectKeyPress =
           e.key == text[userPointer] ||
-          (e.key == "Enter" && text[userPointer] == "\n");
+          (e.key == "Enter" && text[userPointer] == "\n") ||
+          (e.key === "Tab" && text[userPointer] === "\t");
 
         if (isCorrectKeyPress) {
           setUserPointer((prev) => prev + 1);
@@ -78,24 +82,28 @@ export function CodeBox(props: Props) {
       }}
       tabIndex={0}
     >
-      {splitText.slice(0, userPointer).map((char, i) => {
-        if (positionMap[i]) return renderOther(positionMap[i], char);
+      <p style={{ whiteSpace: "pre-wrap" }}>
+        {splitText.slice(0, userPointer).map((char, i) => {
+          if (positionMap[i]) return renderOther(positionMap[i], char);
 
-        return renderDone(char);
-      })}
-      {splitText[userPointer] === " " ? (
-        <span style={{ backgroundColor: "red" }}>{splitText[userPointer]}</span>
-      ) : (
-        <span style={{ color: "red" }}>{splitText[userPointer]}</span>
-      )}
-      {userPointer < splitText.length &&
-        splitText.slice(userPointer + 1).map((char, i) => {
-          {
-            if (positionMap[i + userPointer + 1])
-              return renderOther(positionMap[i + userPointer + 1], char);
-            return <span>{char}</span>;
-          }
+          return renderDone(char);
         })}
+        {/\s/g.test(splitText[userPointer]) ? (
+          <span style={{ backgroundColor: "red" }}>
+            {splitText[userPointer] === "\n" ? " \n" : splitText[userPointer]}
+          </span>
+        ) : (
+          <span style={{ color: "red" }}>{splitText[userPointer]}</span>
+        )}
+        {userPointer < splitText.length &&
+          splitText.slice(userPointer + 1).map((char, i) => {
+            {
+              if (positionMap[i + userPointer + 1])
+                return renderOther(positionMap[i + userPointer + 1], char);
+              return <span>{char}</span>;
+            }
+          })}
+      </p>
     </div>
   );
 }
