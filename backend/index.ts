@@ -2,6 +2,7 @@ import express from "express";
 import connect from "src/db/connect";
 import bodyParser from "body-parser";
 import { usersRouter } from "src/routes/userRouter";
+import Player from "src/game/Player";
 
 const app = express();
 
