@@ -5,40 +5,38 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import { io } from "socket.io-client";
-import useToken from "./tools/useToken";
 
 function App() {
-  const { token, setToken } = useToken();
 
   useEffect(() => {
     const socket = io("http://localhost:8080/");
     socket.send("CreateRoom", "test");
     console.log(socket);
-      setToken("heleworkd")
   }, []);
+  const token = false;
 
   function NavBar() {
     return (
         <nav>
           <ul>
             {
-              token
+              !token
                   ?
-                  <>
-                      <li>
-                          <Link to="/statistics">Statistics</Link>
-                      </li>
-                      <li>
-                          <Link to="/">Game</Link>
-                      </li>
-                  </>
-                  :
                   <>
                       <li>
                           <Link to="/">Login</Link>
                       </li>
                       <li>
                           <Link to="/signup">Signup</Link>
+                      </li>
+                  </>
+                  :
+                  <>
+                      <li>
+                          <Link to="/statistics">Statistics</Link>
+                      </li>
+                      <li>
+                          <Link to="/">Game</Link>
                       </li>
                   </>
             }
@@ -58,7 +56,7 @@ function App() {
                 <SignupPage />
               </Route>
               <Route path="/">
-                <LoginPage setToken={setToken} />
+                <LoginPage />
               </Route>
             </Switch>
           </div>
