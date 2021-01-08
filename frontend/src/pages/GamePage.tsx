@@ -41,7 +41,8 @@ function PracticeBox(props: any) {
                  }
                  const isCorrectKeyPress =
                      e.key == text[ptr] ||
-                     (e.key == "Enter" && text[ptr] == "\n");
+                     (e.key == "Enter" && text[ptr] == "\n") ||
+                     (e.key == "Enter" && text[ptr] == " ");
 
                  if(isCorrectKeyPress) {
                      setPtr(ptr + 1);
