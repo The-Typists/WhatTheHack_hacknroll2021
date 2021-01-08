@@ -1,3 +1,4 @@
+import { profile } from "console";
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { UserDocument, User } from "./User";
 
@@ -7,6 +8,7 @@ export interface IProfile {
   totalCharacters: number;
   totalWords: number;
   totalTime: number;
+  listOfCode: string[];
 }
 
 export interface ProfileDocument extends IProfile, Document {}
@@ -16,7 +18,8 @@ export interface ProfileModel extends Model<ProfileDocument> {
   findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
   initializeUser(id: string): void;
   updateProfile(username: string, totalAttempts: number, totalCharacters: number, totalWords: number,
-    totalTime: number): Promise<UserDocument>;
+    totalTime: number): Promise<ProfileDocument>;
+  addCode(id: string, code: string): Promise<ProfileDocument>;
 }
 
 const profileSchema = new Schema({
@@ -36,6 +39,9 @@ const profileSchema = new Schema({
   },
   totalTime: {
     type: Number,
+  },
+  listOfCode: {
+    type: [String]
   }
 });
 
@@ -87,6 +93,21 @@ profileSchema.statics.updateProfile = async function (
 
   return profileExists;
 };
+
+profileSchema.statics.addCode = async function (
+  this: Model<ProfileDocument>,
+  user: string,
+  code: string,
+): Promise<ProfileDocument> {
+  const profileExists = await Profile.findOne({ user });
+  if (!profileExists) {
+    throw new Error("invalid user id provided.");
+  }
+  profileExists.listOfCode.push(code);
+  await profileExists.save();
+
+  return profileExists;
+}
 
 export const Profile = mongoose.model<ProfileDocument, ProfileModel>(
   "Profile",
