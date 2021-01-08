@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "Consola";
+    src: local("Consola"),
+    url("./fonts/consola.ttf") format("truetype");
+    font-weight: normal;
+}
+
+html, body, #root {
+    height: 100%;
+}
