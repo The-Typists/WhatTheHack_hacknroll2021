@@ -48,7 +48,7 @@ router.route("/login").post((req, res) => {
     const password: string = req.body.password;
 
     if(!req.body.username || !req.body.password){
-        res.json({message: "Please enter both username and password"});
+        res.status(400).json({message: "Please enter both username and password"});
     } else {
         User.verifyUser(username, password)
             .then((user) => {
