@@ -13,7 +13,7 @@ router.route("/").get((req, res) => {
 router.route("/update/:id").post(async (req, res) => {
     const user = req.params.id;
     const totalAttempts = req.body.totalAttempts;
-    const totalCharacter = req.body.totalCharacter;
+    const totalCharacter: number = req.body.totalCharacters;
     const totalWords = req.body.totalWords;
     const totalTime = req.body.totalTime;
     
@@ -21,7 +21,7 @@ router.route("/update/:id").post(async (req, res) => {
         const newProfile = await Profile.updateProfile(user, totalAttempts, totalCharacter, totalWords, totalTime);
         res.json(newProfile.toJSON());
     } catch (err) {
-        res.json('Error: ' + err);
+        res.json('Error for update: ' + err);
     }
 });
 
