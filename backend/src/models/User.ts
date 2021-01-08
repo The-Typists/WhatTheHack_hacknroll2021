@@ -1,12 +1,14 @@
 import { Document, Schema, Model, model } from "mongoose";
-import { Profile } from "./Profile";
+import { Profile, ProfileDocument } from "./Profile";
 
 export interface IUser {
   username: string;
   password: string;
 }
 
-export interface UserDocument extends IUser, Document {}
+export interface UserDocument extends IUser, Document {
+  getProfile(): Promise<ProfileDocument>;
+}
 
 export interface UserModel extends Model<UserDocument> {
   verifyUser(username: string, password: string): Promise<boolean>;
@@ -42,6 +44,10 @@ userSchema.pre<UserDocument>("save", function (next) {
 
   next();
 });
+
+userSchema.methods.getProfile = function (this: UserDocument) {
+  return Profile.findOne({ user: this.id });
+};
 
 userSchema.statics.verifyUser = async function (
   this: Model<UserDocument>,
