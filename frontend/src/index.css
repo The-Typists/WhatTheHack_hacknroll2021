@@ -8,3 +8,8 @@
 html, body, #root {
     height: 100%;
 }
+
+.loggedInNav, .loggedOutNav {
+    background-color: rgb(235, 126, 126);
+    align-items: center;
+}

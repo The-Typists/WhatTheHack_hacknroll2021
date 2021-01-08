@@ -11,6 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
 import NavItem from "react-bootstrap/esm/NavItem";
+import "./index.css"
 
 
 
@@ -25,7 +26,7 @@ function App() {
   function NavBar() {
 
     const loggedOut = (
-      <Navbar bg="light">
+      <Navbar className="loggedOutNav">
         <Nav className="mr-auto">
           <Nav.Item>
             <Nav.Link href="/signup"> Signup</Nav.Link>
@@ -38,7 +39,7 @@ function App() {
 
 
     const loggedIn = (
-      <Navbar bg="light">
+      <Navbar className="loggedInNav">
         <Nav className="mr-auto">
             <Nav.Item>
             <Nav.Link href="/home"> Home</Nav.Link>
