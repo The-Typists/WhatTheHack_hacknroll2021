@@ -11,7 +11,6 @@ export function CodeBox(props: any) {
     // Lobby size = 5 (incl yourself)
     const [opp, setOpp] = useState([0, 0, 0, 0]);
 
-    /*
     useEffect(() => {
         const SERVER = "http://127.0.0.1:2105";
         // @ts-ignore
@@ -25,7 +24,7 @@ export function CodeBox(props: any) {
             console.log("opp:", opp)
         })
     }, [])
-    */
+    
 
     const otherPlayers = [
         {
@@ -63,13 +62,13 @@ export function CodeBox(props: any) {
             } tabIndex={0}
         >
             {text.split("").map((char, i) => {
-                {
-                    if (i == userPointer) {
+                {  
+                    if (i <= userPointer) {
                         return <span style={{ color: "red" }}>{char}</span>
                     }
                     const samePos = otherPlayers.filter(x => x.position == i)
                     for (let player of samePos) {
-                        return <span style={{ backgroundColor: player.color, borderBlock: 1 }}>{char}</span>
+                        return <span style={{ backgroundColor: player.color, border: "1px solid red" }}>{char}</span>
                     }
                     return <span>{char}</span>
                 }
@@ -77,9 +76,6 @@ export function CodeBox(props: any) {
 
         </div>
     )
-
-
-
 
 
 

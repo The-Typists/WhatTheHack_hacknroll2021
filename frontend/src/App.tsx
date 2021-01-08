@@ -6,6 +6,12 @@ import SignupPage from "./pages/SignupPage";
 import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
 import GameRoom from "./pages/GameRoom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
+import Table from 'react-bootstrap/Table';
+
+
 
 function App() {
   const [isLoggedin, setLoggedin] = useState(false);
@@ -17,7 +23,7 @@ function App() {
 
   function NavBar() {
     return (
-      <nav>
+      <Navbar>
         <ul>
           {!isLoggedin ? (
             <>
@@ -50,7 +56,7 @@ function App() {
             </>
           )}
         </ul>
-      </nav>
+      </Navbar>
     );
   }
 
