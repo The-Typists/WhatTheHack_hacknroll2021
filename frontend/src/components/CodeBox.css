@@ -1,0 +1,18 @@
+.container {
+    background-color: #FFFAED;
+    padding: 20px;
+    width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px #9E9E9E;
+}
+.container>p {
+    opacity: 0.5;
+}
+
+.container:focus {
+    outline: none;
+}
+.container:focus>p {
+    opacity: 1;
+    outline: none;
+}
