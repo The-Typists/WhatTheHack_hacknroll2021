@@ -12,6 +12,7 @@ export interface ProfileModel extends Model<ProfileDocument> {
   findProfileByUsername(username: string): Promise<ProfileModel | undefined>;
   findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
   initializeUser(id: string): void;
+  createProfile(username: string, wordPerMinute: number): Promise<UserDocument>;
 }
 
 const profileSchema = new Schema({
@@ -51,6 +52,21 @@ profileSchema.statics.initializeUser = async function (
 ) {
   const profile = new Profile({ user: id });
   profile.save();
+};
+
+profileSchema.statics.createProfile = async function (
+  this: Model<ProfileDocument>,
+  user: string,
+  wordsPerMinute: number
+): Promise<ProfileDocument> {
+  const profileExists = await Profile.findOne({ user });
+  if (profileExists) {
+    throw new Error("wordsPerMinute initialized, please use update instead of add");
+  }
+  const profile = new Profile({ user, wordsPerMinute });
+  const savedProfile = await profile.save();
+  Profile.initializeUser(savedProfile.id);
+  return savedProfile;
 };
 
 export const Profile = mongoose.model<ProfileDocument, ProfileModel>(
