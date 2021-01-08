@@ -55,9 +55,9 @@ userSchema.statics.verifyUser = async function (
   password: string
 ): Promise<UserDocument> {
   const user = await this.findOne({ username: username }).exec();
-  if (!user || user.password !== hashPassword(password))
+  if (!user || user.password != hashPassword(password)) {
     throw new Error("Failed to authenticate");
-
+  }
   return user;
 };
 
@@ -70,6 +70,7 @@ userSchema.statics.createUser = async function (
   if (userExists) {
     throw new Error("Username is in use");
   }
+  
   const user = new User({ username, password });
   const savedUser = await user.save();
   Profile.initializeUser(savedUser.id);
