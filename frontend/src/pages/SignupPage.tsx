@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import { useHistory, } from "react-router-dom";
 
 
 function SignupPage({ setLoggedin }:any) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const history = useHistory();
 
-    const formHandler = (submission:any) => {
-        alert(submission);
-    }
     const signUpHandler = () => {
         axios.post(`/users/add`, {
              username,
@@ -16,6 +15,7 @@ function SignupPage({ setLoggedin }:any) {
         }).then(res => {
             console.log(res)
             setLoggedin(true);
+            history.push("/stats");
         }).catch(res => {
             console.log(res)
         })
@@ -31,7 +31,7 @@ function SignupPage({ setLoggedin }:any) {
             fontFamily: "Consola"
         }}>
             <div style={{marginBottom: 20, fontSize: 24}}>Signup</div>
-            <form onSubmit={formHandler}>
+            <form>
                 <label>Username :
                     <input onChange={x => setUsername(x.target.value)}/>
                 </label>

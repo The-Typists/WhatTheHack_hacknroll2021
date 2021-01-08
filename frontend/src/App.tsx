@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage";
@@ -9,6 +9,7 @@ import GameRoom from "./pages/GameRoom";
 
 function App() {
   const [isLoggedin, setLoggedin] = useState(false);
+
   useEffect(() => {
     setLoggedin(!!localStorage.getItem("user"));
     console.log(localStorage.getItem("user"));
@@ -71,16 +72,16 @@ function App() {
         ) : (
           <>
             <Switch>
-              <Route path="/stats">
-                <StatisticsPage />
-              </Route>
-              <Route exact path="/">
-                <Home />;
-                <GamePage />
-              </Route>
-              <Route exact path="/room/:code">
-                <GameRoom />
-              </Route>
+                <Route path="/stats">
+                    <StatisticsPage />
+                </Route>
+                <Route exact path="/room/:code">
+                    <GameRoom />
+                </Route>
+                <Route exact path="/">
+                    <Home />;
+                    <GamePage />
+                </Route>
             </Switch>
           </>
         )}
