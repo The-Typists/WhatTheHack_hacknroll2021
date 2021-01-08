@@ -1,19 +1,22 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
 
 function SignupPage() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     const formHandler = (submission:any) => {
         alert(submission);
     }
     const signUpHandler = () => {
         axios.post(`/users/add`, {
-             username: "nope",
-             password: "123"
+             username,
+             password
         }).then(res => {
-            alert(res);
+            console.log(res)
         }).catch(res => {
-            alert(res);
+            console.log(res)
         })
     }
     return (
@@ -29,11 +32,11 @@ function SignupPage() {
             <div style={{marginBottom: 20, fontSize: 24}}>Signup</div>
             <form onSubmit={formHandler}>
                 <label>Username :
-                    <input/>
+                    <input onChange={x => setUsername(x.target.value)}/>
                 </label>
                 <br/>
                 <label>Password :
-                    <input/>
+                    <input onChange={x => setPassword(x.target.value)}/>
                 </label>
                 <br/>
             </form>
