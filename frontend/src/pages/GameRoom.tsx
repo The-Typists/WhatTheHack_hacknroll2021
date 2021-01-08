@@ -106,19 +106,30 @@ const GameRoom = () => {
     socket?.emit("start-game", code);
   };
 
-  const leaderBoard = () => {
-    if(gameStarted) {
-        <LeaderBoard />
-    }
-    return <LeaderBoard />
-  }
+  const copyLink = () => {
+    const textArea = document.getElementById("copy") as HTMLTextAreaElement;
+    textArea.select();
+    console.log(textArea);
+    document.execCommand("copy");
+  };
 
   if (!gameStarted) {
     return (
       <div className="lobby-container">
         <div className="header">
           <h3>Gameroom {code}</h3>
-          <Button onClick={startGame}>Start Game</Button>
+          <div>
+            <Button
+              style={{ marginRight: 10 }}
+              onClick={copyLink}
+              variant="dark"
+            >
+              Get Room Link
+            </Button>
+            <Button variant="dark" onClick={startGame}>
+              Start Game
+            </Button>
+          </div>
         </div>
 
         <Table striped bordered hover variant={"dark"}>
@@ -137,6 +148,13 @@ const GameRoom = () => {
             ))}
           </tbody>
         </Table>
+        <div>
+          <textarea
+            style={{ transform: "translate(50000px)" }}
+            id="copy"
+            value={window.location.href}
+          />
+        </div>
       </div>
     );
   }
@@ -146,8 +164,9 @@ const GameRoom = () => {
       <CodeBox roomCode={code} text={text} positions={positions} name={name} />
 
       <br></br>
-
-      {leaderBoard}
+      <div>
+        <LeaderBoard endingStats={leaderboard} text={text} />
+      </div>
     </div>
   );
 };

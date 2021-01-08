@@ -9,7 +9,6 @@ import {
 import { generateRoomCode } from "./util";
 import Player from "./Player";
 import Room from "./Room";
-import { socketHandler } from ".";
 
 const rooms: Record<string, Room> = {};
 export default function (io: Server) {
@@ -51,6 +50,12 @@ export default function (io: Server) {
     // Remove player from room and delete the room if it is empty
     socket.on("disconnect", (reason: string) => {
       console.log(`A socket is disconnecting ${reason}`);
+      Object.keys(rooms).forEach((k) => {
+        rooms[k].removePlayer(socket.id);
+        if (rooms[k].getSize() === 0) {
+          delete rooms[k];
+        }
+      });
       // const room = socket.room;
       // if (room) {
       //   room.removePlayer(socket.id);
