@@ -1,17 +1,19 @@
+import { Socket } from "socket.io";
 /**
  * Player represents a single user in a room.
  */
 class Player {
-  id: string;
   username: string;
   color: string;
+  socket: Socket;
   private startTime: Date | undefined;
   private endTime: Date | undefined;
+  private position: number = 0;
 
-  public constructor(id: string, username: string, color: string) {
-    this.id = id;
+  public constructor(username: string, color: string, socket: Socket) {
     this.username = username;
     this.color = color;
+    this.socket = socket;
   }
 
   /**
@@ -37,6 +39,18 @@ class Player {
     }
 
     return this.endTime.getTime() - this.startTime.getTime();
+  }
+
+  updatePosition(position: number) {
+    this.position = position;
+  }
+
+  getBroadcastPosition() {
+    return {
+      username: this.username,
+      color: this.color,
+      position: this.position,
+    };
   }
 }
 
