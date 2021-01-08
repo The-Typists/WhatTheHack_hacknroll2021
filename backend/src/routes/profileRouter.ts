@@ -37,4 +37,16 @@ router.route("/uploadCode/:id").post(async (req, res) => {
     }
 })
 
+router.route("/deleteCode/:id").post(async (req, res) => {
+    const user = req.params.id;
+    const code = req.body.code;
+
+    try {
+        const addCode = await Profile.deleteCode(user, code);
+        res.json(addCode.toJSON());
+    } catch (err) {
+        res.json("Error: " + err);
+    }
+})
+
 export const profileRouter = router;
