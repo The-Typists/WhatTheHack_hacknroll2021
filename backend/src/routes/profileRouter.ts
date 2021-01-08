@@ -21,7 +21,7 @@ router.route("/update/:id").post(async (req, res) => {
     const totalAttempts = req.body.totalAttempts;
     const totalCharacter: number = req.body.totalCharacters;
     const totalWords = req.body.totalWords;
-    const totalTime = req.body.totalTime;
+    const totalTime = req.body.totalTime/1000;
     
     try {
         const newProfile = await Profile.updateProfile(user, totalAttempts, totalCharacter, totalWords, totalTime);

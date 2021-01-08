@@ -97,7 +97,7 @@ const GameRoom = () => {
 
       socket.on("player-finish-game", (end: EndPosition) => {
         console.log(end);
-        setLeaderboard([...leaderboard, end]);
+        setLeaderboard((prev) => [...prev, end]);
       });
     }
   }, [socket]);
