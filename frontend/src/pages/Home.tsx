@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSock } from "../hooks/useSock";
 import Table from "react-bootstrap/Table";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import "./Home.css";
 
 interface Room {
@@ -38,36 +38,37 @@ const Home = () => {
 
   // @ts-ignore
   return (
-      <div className="lobby-container">
-        <div className="header">
-            <h3>Available Rooms</h3>
-          <Button onClick={onCreate}>Create Room</Button>
-        </div>
+    <div className="lobby-container">
+      <div className="header">
+        <h3>Available Rooms</h3>
+        <Button variant="dark" onClick={onCreate}>
+          Create Room
+        </Button>
+      </div>
 
-        <Table striped bordered hover variant="dark">
-          <thead>
+      <Table striped bordered hover variant="dark">
+        <thead>
           <tr>
             <th>S/N</th>
             <th>Room Code</th>
             <th>Capacity</th>
           </tr>
-          </thead>
-          <tbody>
-          {
-            rooms.map((room, index) =>
-                <tr onClick={() => {
-                  history.push(`/room/${room.roomCode}`);
-                }}>
-                  <td>{index}</td>
-                  <td>{room.roomCode}</td>
-                  <td>{room.size} / 5</td>
-                </tr>
-            )
-          }
-          </tbody>
-        </Table>
-
-      </div>
+        </thead>
+        <tbody>
+          {rooms.map((room, index) => (
+            <tr
+              onClick={() => {
+                history.push(`/room/${room.roomCode}`);
+              }}
+            >
+              <td>{index}</td>
+              <td>{room.roomCode}</td>
+              <td>{room.size} / 5</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 
