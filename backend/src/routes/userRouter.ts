@@ -52,7 +52,7 @@ router.route("/login").post((req, res) => {
     } else {
         User.verifyUser(username, password)
             .then((user) => {
-                res.send(user.toJSON())
+                res.send(user)
             })
             .catch((err) => res.status(400).json(err));
     }

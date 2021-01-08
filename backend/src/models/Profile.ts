@@ -63,7 +63,7 @@ profileSchema.statics.initializeUser = async function (
   this: Model<ProfileDocument>,
   id: string
 ) {
-  const profile = new Profile({ user: id });
+  const profile = new Profile({ user: id, totalAttempts: 0, totalCharacters: 0, totalWords: 0, totalTime: 0});
   profile.save();
 };
 
