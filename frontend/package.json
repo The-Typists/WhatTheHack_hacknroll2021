@@ -47,5 +47,5 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7"
   },
-  "proxy": "http://backend:8080/"
+  "proxy": "http://116.14.33.220:8080/"
 }

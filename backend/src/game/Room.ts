@@ -4,32 +4,43 @@ import { Server } from "socket.io";
 import { Event } from "./protocols";
 import { Profile } from "../models/Profile";
 
-const text = `package org.arpit.java2blog;
+// const text = `package org.arpit.java2blog;
 
-import java.util.Scanner;
+// import java.util.Scanner;
 
-public class FizzBuzzMain {
+// public class FizzBuzzMain {
 
-	public static void main(String[] args) {
+// 	public static void main(String[] args) {
 
-		Scanner s = new Scanner(System.in);
-		System.out.println("Enter number:");
-		int n = s.nextInt();
-		System.out.println("The FizzBuzz numberswill be: ");
-		for (int i = 1; i <= n; i++) {
-			if (i % 3 == 0 && i % 5 == 0) { //multiple of 3 & 5
-				System.out.print("FizzBuzz");
-			} else if (i % 3 == 0) { //multiple of 3
-				System.out.print("Fizz");
-			} else if (i % 5 == 0) { //multiple of 5
-				System.out.print("Buzz");
-			} else {
-				System.out.print(i);
-			}
-			System.out.print(" ");
-		}
-		s.close();
-	}
+// 		Scanner s = new Scanner(System.in);
+// 		System.out.println("Enter number:");
+// 		int n = s.nextInt();
+// 		System.out.println("The FizzBuzz numberswill be: ");
+// 		for (int i = 1; i <= n; i++) {
+// 			if (i % 3 == 0 && i % 5 == 0) { //multiple of 3 & 5
+// 				System.out.print("FizzBuzz");
+// 			} else if (i % 3 == 0) { //multiple of 3
+// 				System.out.print("Fizz");
+// 			} else if (i % 5 == 0) { //multiple of 5
+// 				System.out.print("Buzz");
+// 			} else {
+// 				System.out.print(i);
+// 			}
+// 			System.out.print(" ");
+// 		}
+// 		s.close();
+// 	}
+// }`;
+
+const text = `public class HelloWorld {
+  public static void main(String[] args) {
+    int x = 10;
+    System.out.println("Hello world!");
+    if (x > 5) {
+      int y = x % 5;
+    }
+    System.out.println(args.length)
+  }
 }`;
 /**
  * Room represents the game room that users belong in.

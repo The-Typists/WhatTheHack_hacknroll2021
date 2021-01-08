@@ -104,7 +104,7 @@ function App() {
                   <GameRoom />
                 </Route>
                 <Route path="/">
-                  <Home />;
+                  <Home />
                 </Route>
               </Switch>
             </>
