@@ -2,6 +2,7 @@ export enum Event {
   GetRooms = "rooms",
   CreateRoom = "create-room",
   JoinRoom = "join-room",
+  PlayersInRoom = "get-room-players",
   StartGame = "start-game",
   FinishGame = "finish-game",
   SendPosition = "send-position",
@@ -12,7 +13,6 @@ export enum Event {
 
 export type JoinRoomRequest = {
   username: string;
-  id: string;
   color: string;
   roomCode: string;
 };
