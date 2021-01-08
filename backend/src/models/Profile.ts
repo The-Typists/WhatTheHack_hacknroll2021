@@ -1,4 +1,3 @@
-import { profile } from "console";
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { UserDocument, User } from "./User";
 

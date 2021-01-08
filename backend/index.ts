@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import connect from "src/db/connect";
+import connect from "./src/db/connect";
 import bodyParser from "body-parser";
 
-import { profileRouter } from "src/routes/profileRouter";
-import { usersRouter } from "src/routes/userRouter";
+import { profileRouter } from "./src/routes/profileRouter";
+import { usersRouter } from "./src/routes/userRouter";
 import http from "http";
 import { Server } from "socket.io";
 import { socketHandler } from "./src/game";
