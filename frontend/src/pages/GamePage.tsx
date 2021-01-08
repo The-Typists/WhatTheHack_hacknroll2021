@@ -58,8 +58,10 @@ function PracticeBox(props: any) {
                 <span>{text.slice(ptr+1)}</span>
             </p>
 
-            <p>Time Elapsed : {elapsedTime.toFixed(1)}</p>
+            <p>---------------------------</p>
+            <p>Time  Elapsed : {elapsedTime.toFixed(1)}</p>
             <p>WPM : {((text.slice(0,ptr).split(" ").length) / elapsedTime * 60).toFixed(0)}</p>
+            <p>---------------------------</p>
             <button onClick={() => {
                 setPtr(0)
                 resetTimer()
