@@ -1,19 +1,25 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
+import useStickyState from "./tools";
+
 
 function App() {
-  const token = false;
+  const [isLoggedin, setLoggedin] = useState(false);
+  useEffect(() => {
+      setLoggedin(!!localStorage.getItem('user'))
+      console.log(localStorage.getItem('user'));
+  },[])
 
   function NavBar() {
     return (
       <nav>
         <ul>
-          {!token ? (
+          {!isLoggedin ? (
             <>
               <li>
                 <Link to="/">Login</Link>
@@ -30,6 +36,12 @@ function App() {
               <li>
                 <Link to="/">Game</Link>
               </li>
+                <li>
+                    <Link to="" onClick={() => {
+                        localStorage.clear();
+                        setLoggedin(false);
+                    }}>Logout</Link>
+                </li>
             </>
           )}
         </ul>
@@ -41,14 +53,14 @@ function App() {
     <Router>
       <div>
         <NavBar />
-        {!token ? (
+        {!isLoggedin ? (
           <>
             <Switch>
               <Route path="/signup">
-                <SignupPage />
+                <SignupPage setLoggedin={setLoggedin}/>
               </Route>
               <Route path="/">
-                <LoginPage />
+                <LoginPage setLoggedin={setLoggedin}/>
               </Route>
             </Switch>
           </>

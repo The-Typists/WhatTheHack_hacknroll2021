@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
 
-function SignupPage() {
+function SignupPage({ setLoggedin }:any) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,6 +15,7 @@ function SignupPage() {
              password
         }).then(res => {
             console.log(res)
+            setLoggedin(true);
         }).catch(res => {
             console.log(res)
         })

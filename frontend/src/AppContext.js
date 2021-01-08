@@ -5,4 +5,4 @@ export const loggedOut = {
     id:"",
     isLoggedIn:false
 }
-export const AuthContext = React.createContext(loggedOut);
+export const AppContext = React.createContext(loggedOut);

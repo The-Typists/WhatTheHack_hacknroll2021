@@ -1,9 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import {CodeBox} from "../components/CodeBox";
+import axios from "axios";
 
 function LoginPage(props:any) {
-    const formHandler = (submission:any) => {
-        alert(submission);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const loginHandler = () => {
+        axios.post(`/users/login`, {
+            username,
+            password
+        }).then(res => {
+            if(res.)
+            console.log(res)
+            localStorage.setItem('user', JSON.stringify({}))
+            // props.setLoggedin(true);
+        }).catch(res => {
+            console.log(res)
+        })
     }
     return (
         <div style={{
@@ -16,18 +30,18 @@ function LoginPage(props:any) {
             fontFamily: "Consola"
         }}>
             <div style={{marginBottom: 20, fontSize: 24}}>Login</div>
-            <form onSubmit={formHandler}>
+            <form>
                 <label>Username :
-                    <input/>
+                    <input onChange={x => setUsername(x.target.value)}/>
                 </label>
                 <br/>
                 <label>Password :
-                    <input/>
+                    <input onChange={x => setPassword(x.target.value)}/>
                 </label>
                 {/* nb: passwords will be stored in plain text, need to indicate to them, or submit as a hash */}
                 <br/>
-                <input type={"submit"} value={"Submit"}/>
             </form>
+            <button onClick={loginHandler}>Log In</button>
         </div>
     );
 }
