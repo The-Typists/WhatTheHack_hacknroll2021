@@ -9,8 +9,11 @@ import { io } from "socket.io-client";
 function App() {
   useEffect(() => {
     const socket = io("http://localhost:8080/");
-    socket.send("CreateRoom", "test");
-    console.log(socket);
+    socket.on("connect", () => {
+      console.log("Connected");
+      socket.emit("join-room", { name: "name", id: "id", color: "color" });
+      console.log("Sent");
+    });
   }, []);
 
   return (
