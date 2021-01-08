@@ -51,4 +51,24 @@ function PracticeBox(props: any) {
     </div>
   );
 }
+class Stopwatch {
+  interval: any;
+  timeElapsed = 0;
+
+  start() {
+    this.interval = setInterval(() => {
+      this.timeElapsed += 1;
+    }, 1);
+  }
+  reset() {
+    this.timeElapsed = 0;
+    clearInterval(this.interval);
+  }
+  stop() {
+    clearInterval(this.interval);
+  }
+  getElapsedTime() {
+    return this.timeElapsed;
+  }
+}
 export default GamePage;

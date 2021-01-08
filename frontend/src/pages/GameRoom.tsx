@@ -42,7 +42,6 @@ const names = [
   "BOOOOOOOOOOOOOOOOOOOOOOOOOOB",
   "Hello World",
 ];
-const name = names[Math.floor(Math.random() * names.length)];
 
 const GameRoom = () => {
   const { code } = useParams<Params>();
@@ -55,6 +54,8 @@ const GameRoom = () => {
   const [positions, setPositions] = useState<Position[]>([]);
   const [text, setText] = useState<string>("");
   const [leaderboard, setLeaderboard] = useState<EndPosition[]>([]);
+  const [name, setName] = useState<string>("");
+
 
   useEffect(() => {
     if (socket) {
@@ -62,11 +63,15 @@ const GameRoom = () => {
         console.log(playerDetails);
         setPlayers(playerDetails);
       });
-      socket.emit("join-room", {
-        username: name,
-        color: color,
-        roomCode: code,
-      });
+      // @ts-ignore
+      Promise.resolve(localStorage.getItem('user')).then(JSON.parse).then(user => {
+        setName(user.username)
+        socket.emit("join-room", {
+          username: user.username,
+          color: color,
+          roomCode: code,
+        });
+      })
 
       socket.on("error-found", () => {
         history.push("/");
