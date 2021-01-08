@@ -17,8 +17,13 @@ export interface ProfileModel extends Model<ProfileDocument> {
   findProfileByUsername(username: string): Promise<ProfileModel | undefined>;
   findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
   initializeUser(id: string): void;
-  updateProfile(username: string, totalAttempts: number, totalCharacters: number, totalWords: number,
-    totalTime: number): Promise<ProfileDocument>;
+  updateProfile(
+    username: string,
+    totalAttempts: number,
+    totalCharacters: number,
+    totalWords: number,
+    totalTime: number
+  ): Promise<ProfileDocument>;
   addCode(id: string, code: string): Promise<ProfileDocument>;
   deleteCode(id: string, code: string): Promise<ProfileDocument>;
 }
@@ -42,8 +47,8 @@ const profileSchema = new Schema({
     type: Number,
   },
   listOfCode: {
-    type: [String]
-  }
+    type: [String],
+  },
 });
 
 profileSchema.statics.findProfileByUsername = async function (
@@ -70,7 +75,13 @@ profileSchema.statics.initializeUser = async function (
   this: Model<ProfileDocument>,
   id: string
 ) {
-  const profile = new Profile({ user: id, totalAttempts: 0, totalCharacters: 0, totalWords: 0, totalTime: 0});
+  const profile = new Profile({
+    user: id,
+    totalAttempts: 0,
+    totalCharacters: 0,
+    totalWords: 0,
+    totalTime: 0,
+  });
   profile.save();
 };
 
@@ -98,7 +109,7 @@ profileSchema.statics.updateProfile = async function (
 profileSchema.statics.addCode = async function (
   this: Model<ProfileDocument>,
   user: string,
-  code: string,
+  code: string
 ): Promise<ProfileDocument> {
   const profileExists = await Profile.findOne({ user });
   if (!profileExists) {
@@ -108,25 +119,28 @@ profileSchema.statics.addCode = async function (
   await profileExists.save();
 
   return profileExists;
-}
+};
 
 profileSchema.statics.deleteCode = async function (
   this: Model<ProfileDocument>,
   user: string,
-  code: string,
+  code: string
 ): Promise<ProfileDocument> {
   const profileExists = await Profile.findOne({ user });
   if (!profileExists) {
     throw new Error("invalid user id provided.");
-  } else if(!profileExists.listOfCode.includes(code)) {
-    throw new Error("No such code exists or it has already been removed.")
+  } else if (!profileExists.listOfCode.includes(code)) {
+    throw new Error("No such code exists or it has already been removed.");
   } else {
-    profileExists.listOfCode.pull(code);
+    profileExists.listOfCode = profileExists.listOfCode.filter(
+      (c) => c !== code
+    );
+
     await profileExists.save();
-  
+
     return profileExists;
   }
-}
+};
 
 export const Profile = mongoose.model<ProfileDocument, ProfileModel>(
   "Profile",

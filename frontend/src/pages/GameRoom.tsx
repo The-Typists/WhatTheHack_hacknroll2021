@@ -80,13 +80,7 @@ const GameRoom = () => {
       <div className="lobby-container">
         <div className="header">
           <h3>Gameroom {code}</h3>
-          <Button
-            onClick={() => {
-              // Start Game
-            }}
-          >
-            Start Game
-          </Button>
+          <Button onClick={startGame}>Start Game</Button>
         </div>
 
         <Table striped bordered hover variant={"dark"}>
