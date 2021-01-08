@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSock } from "../hooks/useSock";
 import Table from "react-bootstrap/Table";
+import Button from 'react-bootstrap/Button';
+import "./Home.css";
 
 interface Room {
   roomCode: string;
@@ -36,9 +38,13 @@ const Home = () => {
 
   // @ts-ignore
   return (
-      <div>
-        <h1 className={"center"}>Available Rooms</h1>
-        <Table striped bordered hover>
+      <div className="lobby-container">
+        <div className="header">
+            <h3>Available Rooms</h3>
+          <Button onClick={onCreate}>Create Room</Button>
+        </div>
+
+        <Table striped bordered hover variant="dark">
           <thead>
           <tr>
             <th>S/N</th>
@@ -59,8 +65,7 @@ const Home = () => {
           </tbody>
         </Table>
 
-      <button onClick={onCreate}>Create Room</button>
-    </div>
+      </div>
   );
 };
 

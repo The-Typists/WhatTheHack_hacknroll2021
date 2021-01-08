@@ -7,9 +7,7 @@ import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
 import GameRoom from "./pages/GameRoom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
-import Table from 'react-bootstrap/Table';
 
 
 
