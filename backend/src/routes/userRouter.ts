@@ -54,7 +54,7 @@ router.route("/login").post((req, res) => {
             .then((user) => {
                 res.send(user.toJSON())
             })
-            .catch((err) => res.json(err));
+            .catch((err) => res.status(400).json(err));
     }
 })
 

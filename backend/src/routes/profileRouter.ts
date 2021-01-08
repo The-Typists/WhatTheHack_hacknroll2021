@@ -10,12 +10,15 @@ router.route("/").get((req, res) => {
         .catch((err: any) => res.json("Error: " + err));
 })
 
-router.route("/add/:id").post(async (req, res) => {
+router.route("/update/:id").post(async (req, res) => {
     const user = req.params.id;
-    const wordsPerMinute = req.body.wordsPerMinute;
+    const totalAttempts = req.body.totalAttempts;
+    const totalCharacter = req.body.totalCharacter;
+    const totalWords = req.body.totalWords;
+    const totalTime = req.body.totalTime;
     
     try {
-        const newProfile = await Profile.createProfile(user, wordsPerMinute)
+        const newProfile = await Profile.updateProfile(user, totalAttempts, totalCharacter, totalWords, totalTime);
         res.json(newProfile.toJSON());
     } catch (err) {
         res.json('Error: ' + err);
