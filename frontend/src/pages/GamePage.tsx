@@ -58,7 +58,8 @@ function PracticeBox(props: any) {
                 <span>{text.slice(ptr+1)}</span>
             </p>
 
-            <p>Time Elapsed : {elapsedTime}</p>
+            <p>Time Elapsed : {elapsedTime.toFixed(1)}</p>
+            <p>WPM : {((text.slice(0,ptr).split(" ").length) / elapsedTime * 60).toFixed(0)}</p>
             <button onClick={() => {
                 setPtr(0)
                 resetTimer()
@@ -102,7 +103,7 @@ export const useStopwatch = () => {
     };
 
     return {
-        elapsedTime: elapsedTime.toFixed(1),
+        elapsedTime: elapsedTime,
         resetTimer: () => handleReset(),
         startTimer: () => setIsRunning(true),
         stopTimer: () => setIsRunning(false),
