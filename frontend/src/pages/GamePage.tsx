@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { CodeBox } from "../components/CodeBox";
+import React, {useEffect, useState} from "react";
 
 function GamePage() {
   return (
@@ -26,49 +25,90 @@ function PracticeBox(props: any) {
   const { style } = props;
   const [ptr, setPtr] = useState(0);
 
-  return (
-    <div
-      className={"container"}
-      style={{ margin: style.margin }}
-      onKeyDown={(e) => {
-        const isCorrectKeyPress =
-          e.key == text[ptr] || (e.key == "Enter" && text[ptr] == "\n");
+    const {
+        elapsedTime,
+        resetTimer,
+        startTimer,
+        stopTimer,
+    } = useStopwatch();
 
-        if (isCorrectKeyPress) {
-          setPtr(ptr + 1);
-          console.log("Next Char is ", text[ptr + 1]);
-        }
-      }}
-      tabIndex={0}
-    >
-      <p style={{ whiteSpace: "pre-wrap" }}>
-        <span style={{ color: "red" }}>{text.slice(0, ptr)}</span>
-        <span style={{ backgroundColor: "#FFE0AB" }}>{text[ptr]}</span>
-        <span>{text.slice(ptr + 1)}</span>
-      </p>
 
-      <button onClick={() => setPtr(0)}>Reset</button>
-    </div>
-  );
+    return (
+        <div className={"container"} style={{ margin: style.margin }}
+             onKeyDown={(e) => {
+                 if (ptr == 0) {
+                     startTimer()
+                 }
+                 const isCorrectKeyPress =
+                     e.key == text[ptr] ||
+                     (e.key == "Enter" && text[ptr] == "\n");
+
+                 if(isCorrectKeyPress) {
+                     setPtr(ptr + 1);
+                     if(ptr + 2 == text.length) stopTimer()
+
+                 }
+             }}
+             tabIndex={0}
+        >
+            <p style={{ whiteSpace: "pre-wrap"}}>
+
+                <span style={{color:"red"}}>{text.slice(0,ptr)}</span>
+                <span style={{backgroundColor:"#FFE0AB"}}>{text[ptr]}</span>
+                <span>{text.slice(ptr+1)}</span>
+            </p>
+
+            <p>Time Elapsed : {elapsedTime.toFixed(1)}</p>
+            <p>WPM : {((text.slice(0,ptr).split(" ").length) / elapsedTime * 60).toFixed(0)}</p>
+            <button onClick={() => {
+                setPtr(0)
+                resetTimer()
+            }
+            }>Reset</button>
+        </div>
+    );
 }
-class Stopwatch {
-  interval: any;
-  timeElapsed = 0;
 
-  start() {
-    this.interval = setInterval(() => {
-      this.timeElapsed += 1;
-    }, 1);
-  }
-  reset() {
-    this.timeElapsed = 0;
-    clearInterval(this.interval);
-  }
-  stop() {
-    clearInterval(this.interval);
-  }
-  getElapsedTime() {
-    return this.timeElapsed;
-  }
-}
+export const useTimer = () => {
+    const [isRunning, setIsRunning] = useState(false);
+    const [elapsedTime, setElapsedTime] = useState(0);
+
+    useEffect(
+        () => {
+            let interval: NodeJS.Timeout;
+            if (isRunning) {
+                interval = setInterval(
+                    () => setElapsedTime(prevElapsedTime => prevElapsedTime + 0.1),
+                    100
+                );
+            }
+            return () => clearInterval(interval);
+        },
+        [isRunning]
+    );
+
+    return {
+        isRunning,
+        setIsRunning,
+        elapsedTime,
+        setElapsedTime
+    };
+};
+export const useStopwatch = () => {
+    const { isRunning, setIsRunning, elapsedTime, setElapsedTime } = useTimer();
+
+    const handleReset = () => {
+        setIsRunning(false);
+        setElapsedTime(0);
+    };
+
+    return {
+        elapsedTime: elapsedTime,
+        resetTimer: () => handleReset(),
+        startTimer: () => setIsRunning(true),
+        stopTimer: () => setIsRunning(false),
+        // isRunning
+    };
+};
+
 export default GamePage;

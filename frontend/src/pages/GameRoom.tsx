@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSock } from "../hooks/useSock";
 import { CodeBox } from "../components/CodeBox";
+import LeaderBoard from "../components/Leaderboard";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
@@ -161,6 +162,11 @@ const GameRoom = () => {
   return (
     <div>
       <CodeBox roomCode={code} text={text} positions={positions} name={name} />
+
+      <br></br>
+      <div>
+        <LeaderBoard endingStats={leaderboard} text={text} />
+      </div>
     </div>
   );
 };

@@ -65,8 +65,8 @@ export function CodeBox(props: Props) {
 
   return (
     <div
-      className={"container"}
-      style={{ margin: "1rem" }}
+      className="container"
+      style={{ marginTop: "5rem", marginLeft: "auto", marginRight: "auto" }}
       onKeyDown={(e) => {
         const isCorrectKeyPress =
           e.key == text[userPointer] ||

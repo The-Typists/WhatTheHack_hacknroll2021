@@ -9,7 +9,6 @@ import {
 import { generateRoomCode } from "./util";
 import Player from "./Player";
 import Room from "./Room";
-import { socketHandler } from ".";
 
 const rooms: Record<string, Room> = {};
 export default function (io: Server) {
