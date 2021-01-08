@@ -56,7 +56,6 @@ const GameRoom = () => {
   const [leaderboard, setLeaderboard] = useState<EndPosition[]>([]);
   const [name, setName] = useState<string>("");
 
-
   useEffect(() => {
     if (socket) {
       socket.on("get-room-players", (playerDetails: Player[]) => {
@@ -64,14 +63,16 @@ const GameRoom = () => {
         setPlayers(playerDetails);
       });
       // @ts-ignore
-      Promise.resolve(localStorage.getItem('user')).then(JSON.parse).then(user => {
-        setName(user.username)
-        socket.emit("join-room", {
-          username: user.username,
-          color: color,
-          roomCode: code,
+      Promise.resolve(localStorage.getItem("user"))
+        .then((json) => JSON.parse(json as string))
+        .then((user) => {
+          setName(user.username);
+          socket.emit("join-room", {
+            username: user.username,
+            color: color,
+            roomCode: code,
+          });
         });
-      })
 
       socket.on("error-found", () => {
         history.push("/");
