@@ -24,6 +24,7 @@ function LoginPage() {
                 <label>Password :
                     <input/>
                 </label>
+                {/* nb: passwords will be stored in plain text, need to indicate to them, or submit as a hash */}
                 <br/>
                 <input type={"submit"} value={"Submit"}/>
             </form>

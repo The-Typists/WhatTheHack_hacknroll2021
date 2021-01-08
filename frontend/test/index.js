@@ -33,7 +33,8 @@ io.on('connection', socket => {
         if(opp[0] < max) {
             idx = Math.floor(Math.random() * 10)
             opp[0] += idx
-            opp[1] += idx
+            opp[1] += idx + 1
+            opp[2] += idx + Math.floor(Math.random() * 1)
             socket.emit('updatePos', opp)
         }
     },1000)
