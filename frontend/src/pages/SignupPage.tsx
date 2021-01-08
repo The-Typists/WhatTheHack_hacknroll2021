@@ -1,9 +1,20 @@
-import React from "react";
-import {CodeBox} from "../components/CodeBox";
+import React, {useEffect} from "react";
+import axios from 'axios';
+
 
 function SignupPage() {
     const formHandler = (submission:any) => {
         alert(submission);
+    }
+    const signUpHandler = () => {
+        axios.post(`/users/add`, {
+             username: "nope",
+             password: "123"
+        }).then(res => {
+            alert(res);
+        }).catch(res => {
+            alert(res);
+        })
     }
     return (
         <div style={{
@@ -25,8 +36,8 @@ function SignupPage() {
                     <input/>
                 </label>
                 <br/>
-                <input type={"submit"} value={"Submit"}/>
             </form>
+            <button onClick={signUpHandler}>Sign Up</button>
         </div>
     );
 }
