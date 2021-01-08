@@ -8,7 +8,11 @@ import StatisticsPage from "./pages/StatisticsPage";
 import useToken from "./tools/useToken";
 
 function App() {
+<<<<<<< Updated upstream
   const token = false;
+=======
+  const { token, setToken } = useToken();
+>>>>>>> Stashed changes
 
   function NavBar() {
     return (
