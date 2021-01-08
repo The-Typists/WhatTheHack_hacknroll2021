@@ -16,7 +16,7 @@ function App() {
       console.log("Sent");
     });
   }, []);
-  const token = false;
+  const token = true;
 
   function NavBar() {
     return (
@@ -36,7 +36,7 @@ function App() {
                   :
                   <>
                       <li>
-                          <Link to="/statistics">Statistics</Link>
+                          <Link to="/stats">Statistics</Link>
                       </li>
                       <li>
                           <Link to="/">Game</Link>
@@ -48,37 +48,35 @@ function App() {
     );
   }
 
-
-  if(!token) {
-    return (
-        <Router>
-          <div>
-            <NavBar />
-            <Switch>
-              <Route path="/signup">
-                <SignupPage />
-              </Route>
-              <Route path="/">
-                <LoginPage />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-        )
-  }
-
   return (
     <Router>
       <div>
         <NavBar />
-        <Switch>
-          <Route path="/">
-            <GamePage />
-          </Route>
-          <Route path="/statistics">
-            <StatisticsPage />
-          </Route>
-        </Switch>
+            {
+                !token
+                    ?
+                    <>
+                        <Switch>
+                            <Route path="/signup">
+                                <SignupPage />
+                            </Route>
+                            <Route path="/">
+                                <LoginPage />
+                            </Route>
+                        </Switch>
+                    </>
+                    :
+                    <>
+                        <Switch>
+                            <Route path="/stats">
+                                <StatisticsPage />
+                            </Route>
+                            <Route path="/">
+                                <GamePage />
+                            </Route>
+                        </Switch>
+                    </>
+            }
       </div>
     </Router>
   );
