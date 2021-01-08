@@ -36,11 +36,14 @@ function App() {
             </>
           ) : (
             <>
+            <li>
+                <Link to="/home">Home</Link>
+            </li>
               <li>
                 <Link to="/stats">Statistics</Link>
               </li>
               <li>
-                <Link to="/">Game</Link>
+                <Link to="/game">Practice</Link>
               </li>
               <li>
                 <Link
@@ -82,12 +85,14 @@ function App() {
                 <Route path="/stats">
                     <StatisticsPage />
                 </Route>
+                <Route path="/game">
+                    <GamePage />
+                </Route>
                 <Route exact path="/room/:code">
                     <GameRoom />
                 </Route>
-                <Route exact path="/">
+                <Route path="/">
                     <Home />;
-                    <GamePage />
                 </Route>
             </Switch>
           </>

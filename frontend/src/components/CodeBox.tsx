@@ -11,6 +11,7 @@ export function CodeBox(props: any) {
     // Lobby size = 5 (incl yourself)
     const [opp, setOpp] = useState([0, 0, 0, 0]);
 
+    /*
     useEffect(() => {
         const SERVER = "http://127.0.0.1:2105";
         // @ts-ignore
@@ -24,6 +25,7 @@ export function CodeBox(props: any) {
             console.log("opp:", opp)
         })
     }, [])
+    */
     
 
     const otherPlayers = [

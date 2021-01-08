@@ -12,11 +12,15 @@ function LoginPage(props:any) {
             username,
             password
         }).then(res => {
-            console.log(res)
-            localStorage.setItem('user', JSON.stringify({}))
-            // props.setLoggedin(true);
+            console.log(res);
+            const userdata = {
+                id: res.data._id,
+                username: res.data.username,
+            }
+            localStorage.setItem('user', JSON.stringify(userdata))
+            props.setLoggedin(true);
         }).catch(res => {
-            console.log(res)
+            console.log(res.response)
         })
     }
     return (
