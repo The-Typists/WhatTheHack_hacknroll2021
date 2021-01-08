@@ -1,3 +1,33 @@
+This represents the collective experience of 
+[Tan Kang Liang](https://github.com/tankangliang)
+[Jay Chua](https://github.com/nopenotj)
+[Max Ng](https://github.com/maxxng)
+[Ritesh Kumar](https://github.com/rtshkmr)
+
+## Inspiration
+As budding computer science students, we strive to increase our coding efficiency and that comes with typing practice that is catered for coders. There isn't a free solution online catered for code typing.
+
+Also we feel that having game rooms and interacting with people, especially during these tough times, is chicken soup for the soul.
+
+## What it does
+It's a better typeracer. You can play at it solo, or with friends. You can create and share GameRooms to anyone around the world.
+
+## How We built it
+Using mongodb as the database, express as backend, react as frontend, docker - ized for ease of development and lots of blood and tears and lost youth, bandaged together with socket.io
+
+## Challenges We ran into
+It was difficult to integrate the socket.io into our project, and we faced a lot of difficulty using docker especially during the deployment
+
+## Accomplishments that we're proud of
+I learnt how to utilise docker to set up the project and to integrate the frontend with the backend
+
+## What We learned
+Uploading features for each user
+
+## What's next for Code WPM
+World domination.
+
+
 ## Setting up
 
 1. Install Docker from [here](https://docs.docker.com/install/)
