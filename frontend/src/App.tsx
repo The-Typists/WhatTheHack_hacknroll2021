@@ -12,6 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import Table from "react-bootstrap/Table";
 import NavItem from "react-bootstrap/esm/NavItem";
 import "./index.css";
+import LeaderBoard from "./components/Leaderboard";
 
 function App() {
   const [isLoggedin, setLoggedin] = useState(false);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSock } from "../hooks/useSock";
 import { CodeBox } from "../components/CodeBox";
+import LeaderBoard from "../components/Leaderboard";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
@@ -105,6 +106,13 @@ const GameRoom = () => {
     socket?.emit("start-game", code);
   };
 
+  const leaderBoard = () => {
+    if(gameStarted) {
+        <LeaderBoard />
+    }
+    return <LeaderBoard />
+  }
+
   if (!gameStarted) {
     return (
       <div className="lobby-container">
@@ -136,6 +144,10 @@ const GameRoom = () => {
   return (
     <div>
       <CodeBox roomCode={code} text={text} positions={positions} name={name} />
+
+      <br></br>
+
+      {leaderBoard}
     </div>
   );
 };
