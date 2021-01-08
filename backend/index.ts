@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import connect from "src/db/connect";
 import bodyParser from "body-parser";
 import { usersRouter } from "src/routes/userRouter";
@@ -13,7 +14,7 @@ const server = http.createServer(app);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors());
 connect();
 app.use(express.json());
 app.get("/", (req, res) => res.send("Hellooo world"));
