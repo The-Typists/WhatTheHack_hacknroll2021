@@ -25,7 +25,7 @@ function App() {
           ) : (
             <>
               <li>
-                <Link to="/statistics">Statistics</Link>
+                <Link to="/stats">Statistics</Link>
               </li>
               <li>
                 <Link to="/">Game</Link>
@@ -34,24 +34,6 @@ function App() {
           )}
         </ul>
       </nav>
-    );
-  }
-
-  if (!token) {
-    return (
-      <Router>
-        <div>
-          <NavBar />
-          <Switch>
-            <Route path="/signup">
-              <SignupPage />
-            </Route>
-            <Route path="/">
-              <LoginPage />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
     );
   }
 
