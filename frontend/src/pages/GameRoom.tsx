@@ -98,7 +98,7 @@ const GameRoom = () => {
           <thead>
             <tr>
               <th>S/N</th>
-              <th>Room Code</th>
+              <th>Username</th>
             </tr>
           </thead>
           <tbody>
