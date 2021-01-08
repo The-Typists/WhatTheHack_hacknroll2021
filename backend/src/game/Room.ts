@@ -49,6 +49,7 @@ class Room {
       }
       idx++;
     }
+    if (idx === this.players.length) return;
     this.players[idx].socket.leave(this.name);
     this.players.splice(idx, 1);
   }
