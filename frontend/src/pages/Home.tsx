@@ -41,18 +41,16 @@ const Home = () => {
       <Table striped bordered hover>
         <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>S/N</th>
+          <th>Host</th>
+          <th>Capacity</th>
         </tr>
         </thead>
         <tbody>
         <tr>
           <td>1</td>
           <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <td>3 / 5</td>
         </tr>
         </tbody>
       </Table>
