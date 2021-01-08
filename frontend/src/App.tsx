@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage";
@@ -7,17 +7,12 @@ import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
 import GameRoom from "./pages/GameRoom";
 
-
 function App() {
-<<<<<<< Updated upstream
   const [isLoggedin, setLoggedin] = useState(false);
   useEffect(() => {
-      setLoggedin(!!localStorage.getItem('user'))
-      console.log(localStorage.getItem('user'));
-  },[])
-=======
-  const token = true;
->>>>>>> Stashed changes
+    setLoggedin(!!localStorage.getItem("user"));
+    console.log(localStorage.getItem("user"));
+  }, []);
 
   function NavBar() {
     return (
@@ -40,12 +35,17 @@ function App() {
               <li>
                 <Link to="/">Game</Link>
               </li>
-                <li>
-                    <Link to="" onClick={() => {
-                        localStorage.clear();
-                        setLoggedin(false);
-                    }}>Logout</Link>
-                </li>
+              <li>
+                <Link
+                  to=""
+                  onClick={() => {
+                    localStorage.clear();
+                    setLoggedin(false);
+                  }}
+                >
+                  Logout
+                </Link>
+              </li>
             </>
           )}
         </ul>
@@ -61,10 +61,10 @@ function App() {
           <>
             <Switch>
               <Route path="/signup">
-                <SignupPage setLoggedin={setLoggedin}/>
+                <SignupPage setLoggedin={setLoggedin} />
               </Route>
               <Route path="/">
-                <LoginPage setLoggedin={setLoggedin}/>
+                <LoginPage setLoggedin={setLoggedin} />
               </Route>
             </Switch>
           </>
