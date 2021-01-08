@@ -13,7 +13,6 @@ router.route("/").get((req, res) => {
 router.route("/add").post(async (req, res) => {
   const username: string = req.body.username;
   const password: string = req.body.password;
-
   try {
     const newUser = await User.createUser(username, password);
     res.json(newUser.toJSON());
