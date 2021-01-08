@@ -11,15 +11,13 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/add").post((req, res) => {
-  console.log(req.body);
   const username: String = req.body.username;
   const password: String = req.body.password;
-  console.log(username);
-  console.log(password);
+
   const newUser = new User({ username, password });
   newUser
     .save()
-    .then((username) => res.json(`New user: ${username} added.`))
+    .then(() => res.json(username))
     .catch((err) => res.json("Error: " + err));
 });
 
