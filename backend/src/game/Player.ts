@@ -35,7 +35,8 @@ class Player {
    */
   getTimeTaken(): number {
     if (this.startTime === undefined || this.endTime === undefined) {
-      throw new Error("Times are not correctly initialized");
+      // throw new Error("Times are not correctly initialized");
+      return -1;
     }
 
     return this.endTime.getTime() - this.startTime.getTime();

@@ -2,8 +2,9 @@ import Player from "./Player";
 
 import { Server } from "socket.io";
 import { Event } from "./protocols";
+import { Profile } from "../models/Profile";
 
-const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
+const text = `Lorem Ipsum is typesetting industry.`;
 
 /**
  * Room represents the game room that users belong in.
@@ -18,8 +19,8 @@ class Room {
     this.io = io;
   }
 
-  private findPlayer(socketId: string): Player | undefined {
-    return this.players.find((player) => player.socket.id === socketId);
+  private findPlayer(name: string): Player | undefined {
+    return this.players.find((player) => player.username === name);
   }
 
   getSize(): number {
@@ -61,32 +62,46 @@ class Room {
       .emit(Event.StartGame, { text: text, positions: positions });
   }
 
-  updatePlayerPosition(socketId: string, position: number) {
-    const player = this.findPlayer(socketId);
+  updatePlayerPosition(playerName: string, position: number) {
+    const player = this.findPlayer(playerName);
+
     if (!player) return;
 
     player.updatePosition(position);
+
     this.io
       .to(this.name)
       .emit(Event.SendPosition, player.getBroadcastPosition());
   }
 
-  setPlayerStart(socketId: string) {
-    const player = this.findPlayer(socketId);
+  setPlayerStart(playerName: string) {
+    const player = this.findPlayer(playerName);
     if (!player) return;
 
     player.startTimer();
+    console.log("timer started");
   }
 
-  setPlayerFinished(socketId: string) {
-    const player = this.findPlayer(socketId);
+  setPlayerFinished(playerName: string, text: string) {
+    const player = this.findPlayer(playerName);
     if (!player) return;
 
     player.endTimer();
+    console.log("timer ended");
+    console.log(player.getTimeTaken());
+    console.log(text);
     this.io.to(this.name).emit(Event.PlayerFinishGame, {
       username: player.username,
       time: player.getTimeTaken(),
     });
+
+    Profile.updateProfile(
+      playerName,
+      1,
+      text.length,
+      text.split(" ").length,
+      player.getTimeTaken()
+    ).catch((e) => console.log(e));
   }
 }
 
