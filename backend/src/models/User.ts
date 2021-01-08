@@ -11,7 +11,7 @@ export interface UserDocument extends IUser, Document {
 }
 
 export interface UserModel extends Model<UserDocument> {
-  verifyUser(username: string, password: string): Promise<boolean>;
+  verifyUser(username: string, password: string): Promise<UserDocument>;
   createUser(username: string, password: string): Promise<UserDocument>;
 }
 
@@ -53,13 +53,12 @@ userSchema.statics.verifyUser = async function (
   this: Model<UserDocument>,
   username: string,
   password: string
-): Promise<boolean> {
+): Promise<UserDocument> {
   const user = await this.findOne({ username: username }).exec();
-  if (!user) return false;
+  if (!user || user.password !== hashPassword(password))
+    throw new Error("Failed to authenticate");
 
-  if (user.password !== hashPassword(password)) return false;
-
-  return true;
+  return user;
 };
 
 userSchema.statics.createUser = async function (
