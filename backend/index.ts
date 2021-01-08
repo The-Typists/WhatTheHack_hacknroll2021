@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import connect from "src/db/connect";
 import bodyParser from "body-parser";
+
+import { profileRouter } from "src/routes/profileRouter";
 import { usersRouter } from "src/routes/userRouter";
 import http from "http";
 import { Server } from "socket.io";
@@ -19,6 +21,7 @@ connect();
 app.use(express.json());
 app.get("/", (req, res) => res.send("Hellooo world"));
 app.use("/users", usersRouter);
+app.use("/profile", profileRouter);
 
 server.listen(PORT);
 

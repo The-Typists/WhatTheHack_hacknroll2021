@@ -3,15 +3,20 @@ import { UserDocument, User } from "./User";
 
 export interface IProfile {
   user: UserDocument["_id"];
-  wordPerMinute: number;
+  totalAttempts: number;
+  totalCharacters: number;
+  totalWords: number;
+  totalTime: number;
 }
 
-export interface ProfileDocument extends Document {}
+export interface ProfileDocument extends IProfile, Document {}
 
 export interface ProfileModel extends Model<ProfileDocument> {
   findProfileByUsername(username: string): Promise<ProfileModel | undefined>;
   findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
   initializeUser(id: string): void;
+  updateProfile(username: string, totalAttempts: number, totalCharacters: number, totalWords: number,
+    totalTime: number): Promise<UserDocument>;
 }
 
 const profileSchema = new Schema({
@@ -20,9 +25,18 @@ const profileSchema = new Schema({
     ref: "User",
     required: true,
   },
-  wordPerMinute: {
+  totalAttempts: {
     type: Number,
   },
+  totalCharacters: {
+    type: Number,
+  },
+  totalWords: {
+    type: Number,
+  },
+  totalTime: {
+    type: Number,
+  }
 });
 
 profileSchema.statics.findProfileByUsername = async function (
@@ -51,6 +65,27 @@ profileSchema.statics.initializeUser = async function (
 ) {
   const profile = new Profile({ user: id });
   profile.save();
+};
+
+profileSchema.statics.updateProfile = async function (
+  this: Model<ProfileDocument>,
+  user: string,
+  totalAttempts: number,
+  totalCharacters: number,
+  totalWords: number,
+  totalTime: number
+): Promise<ProfileDocument> {
+  const profileExists = await Profile.findOne({ user });
+  if (!profileExists) {
+    throw new Error("invalid user id provided.");
+  }
+  profileExists.totalAttempts += totalAttempts;
+  profileExists.totalCharacters += totalCharacters;
+  profileExists.totalTime += totalTime;
+  profileExists.totalWords += totalWords;
+  await profileExists.save();
+
+  return profileExists;
 };
 
 export const Profile = mongoose.model<ProfileDocument, ProfileModel>(
