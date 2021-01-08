@@ -11,6 +11,7 @@ export interface ProfileDocument extends Document {}
 export interface ProfileModel extends Model<ProfileDocument> {
   findProfileByUsername(username: string): Promise<ProfileModel | undefined>;
   findProfileByUserId(id: string): Promise<ProfileModel | undefined>;
+  initializeUser(id: string): void;
 }
 
 const profileSchema = new Schema({
@@ -44,7 +45,15 @@ profileSchema.statics.findProfileByUserId = async function (
   return this.findOne({ user: id }).exec();
 };
 
-export const Profile = mongoose.model<ProfileDocument>(
+profileSchema.statics.initializeUser = async function (
+  this: Model<ProfileDocument>,
+  id: string
+) {
+  const profile = new Profile({ user: id });
+  profile.save();
+};
+
+export const Profile = mongoose.model<ProfileDocument, ProfileModel>(
   "Profile",
   profileSchema
 );

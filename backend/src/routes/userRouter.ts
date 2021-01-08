@@ -10,15 +10,16 @@ router.route("/").get((req, res) => {
     .catch((err: any) => res.status(400).json("Error: " + err));
 });
 
-router.route("/add").post((req, res) => {
-  const username: String = req.body.username;
-  const password: String = req.body.password;
+router.route("/add").post(async (req, res) => {
+  const username: string = req.body.username;
+  const password: string = req.body.password;
 
-  const newUser = new User({ username, password });
-  newUser
-    .save()
-    .then(() => res.json(username))
-    .catch((err) => res.json("Error: " + err));
+  try {
+    const newUser = await User.createUser(username, password);
+    res.json(newUser.toJSON());
+  } catch (err) {
+    res.json("Error: " + err);
+  }
 });
 
 export const usersRouter = router;
