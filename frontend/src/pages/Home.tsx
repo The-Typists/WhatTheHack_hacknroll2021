@@ -5,7 +5,7 @@ const Home = () => {
   useEffect(() => {
     const socket = io("/");
     socket.on("connect", () => {
-      console.log("connected");
+      socket.emit("rooms", "gimme rooms");
     });
   }, []);
   return <div>Hello</div>;
