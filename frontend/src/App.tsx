@@ -5,8 +5,11 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import { io } from "socket.io-client";
+import useToken from "./tools/useToken";
 
 function App() {
+  const { token, setToken } = useToken();
+
   useEffect(() => {
     const socket = io("http://localhost:8080/");
     socket.on("connect", () => {
@@ -16,48 +19,66 @@ function App() {
     });
   }, []);
 
+  function NavBar() {
+    return (
+      <nav>
+        <ul>
+          {token ? (
+            <>
+              <li>
+                <Link to="/statistics">Statistics</Link>
+              </li>
+              <li>
+                <Link to="/">Game</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+    );
+  }
+
+  if (!token) {
+    return (
+      <Router>
+        <div>
+          <NavBar />
+          <Switch>
+            <Route path="/signup">
+              <SignupPage />
+            </Route>
+            <Route path="/">
+              <LoginPage setToken={setToken} />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <div>
         <NavBar />
         <Switch>
-          <Route path="/game">
+          <Route path="/">
             <GamePage />
-          </Route>
-          <Route path="/signup">
-            <SignupPage />
           </Route>
           <Route path="/statistics">
             <StatisticsPage />
-          </Route>
-          <Route path="/">
-            <LoginPage />
           </Route>
         </Switch>
       </div>
     </Router>
   );
 }
-
-function NavBar() {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Login</Link>
-        </li>
-        <li>
-          <Link to="/signup">Signup</Link>
-        </li>
-        <li>
-          <Link to="/statistics">Statistics</Link>
-        </li>
-        <li>
-          <Link to="/game">Game</Link>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-
 export default App;

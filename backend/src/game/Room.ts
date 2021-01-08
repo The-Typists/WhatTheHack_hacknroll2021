@@ -70,6 +70,10 @@ class Room {
     if (!player) return;
 
     player.endTimer();
+    this.io.to(this.name).emit(Event.PlayerFinishGame, {
+      username: player.username,
+      time: player.getTimeTaken(),
+    });
   }
 }
 

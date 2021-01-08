@@ -1,7 +1,7 @@
 import React from "react";
 import {CodeBox} from "../components/CodeBox";
 
-function LoginPage() {
+function LoginPage(props:any) {
     const formHandler = (submission:any) => {
         alert(submission);
     }
