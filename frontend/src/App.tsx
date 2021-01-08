@@ -1,22 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
-import { io } from "socket.io-client";
 
 function App() {
-
-  useEffect(() => {
-    const socket = io("http://localhost:8080/");
-    socket.on("connect", () => {
-      console.log("Connected");
-      socket.emit("join-room", { name: "name", id: "id", color: "color" });
-      console.log("Sent");
-    });
-  }, []);
-  const token = true;
+  const token = false;
 
   function NavBar() {
     return (

@@ -13,7 +13,13 @@ const rooms: Record<string, Room> = {};
 export default function (io: Server) {
   io.on("connection", (socket: CustomSocket) => {
     // Return all rooms and their sizes
-    socket.on(Event.GetRooms, () => {});
+    socket.on(Event.GetRooms, () => {
+      const sizes = Object.keys(rooms).map((key) => ({
+        roomCode: key,
+        size: rooms[key].getSize(),
+      }));
+      io.to(socket.id).emit(Event.GetRooms, sizes);
+    });
 
     // Generate room code for user
     socket.on(Event.CreateRoom, () => {
@@ -36,9 +42,11 @@ export default function (io: Server) {
     // Remove player from room and delete the room if it is empty
     socket.on(Event.Disconnect, () => {
       const room = socket.room;
-      room.removePlayer(socket.id);
-      if (room.players.length === 0) {
-        delete rooms[room.name];
+      if (room) {
+        room.removePlayer(socket.id);
+        if (room.players.length === 0) {
+          delete rooms[room.name];
+        }
       }
     });
 

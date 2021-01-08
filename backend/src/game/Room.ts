@@ -22,6 +22,10 @@ class Room {
     return this.players.find((player) => player.socket.id === socketId);
   }
 
+  getSize(): number {
+    return this.players.length;
+  }
+
   addPlayer(player: Player) {
     player.socket.join(this.name);
     this.players.push(player);
