@@ -36,35 +36,29 @@ const Home = () => {
 
   // @ts-ignore
   return (
-    <div>
-      <h1 className={"center"}>Available Rooms</h1>
-      <Table striped bordered hover>
-        <thead>
-        <tr>
-          <th>S/N</th>
-          <th>Host</th>
-          <th>Capacity</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>3 / 5</td>
-        </tr>
-        </tbody>
-      </Table>
+      <div>
+        <h1 className={"center"}>Available Rooms</h1>
+        <Table striped bordered hover>
+          <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Host</th>
+            <th>Capacity</th>
+          </tr>
+          </thead>
+          <tbody>
+          {
+            rooms.map((room, index) =>
+                <tr>
+                  <td>{index}</td>
+                  <td>{room.roomCode}</td>
+                  <td>{room.size} / 5</td>
+                </tr>
+            )
+          }
+          </tbody>
+        </Table>
 
-
-      {rooms.map((room) => {
-        {
-          return (
-              <h4>
-                {room.roomCode} has {room.size}
-              </h4>
-          );
-        }
-      })}
       <button onClick={onCreate}>Create Room</button>
     </div>
   );
