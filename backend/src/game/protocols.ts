@@ -9,6 +9,7 @@ export enum Event {
   PlayerStartGame = "player-start-game",
   PlayerFinishGame = "player-finish-game",
   Disconnect = "disconnect",
+  ErrorEncounted = "error-found",
 }
 
 export type JoinRoomRequest = {
@@ -17,7 +18,4 @@ export type JoinRoomRequest = {
   roomCode: string;
 };
 
-export type SendPositionRequest = {
-  roomCode: string;
-  position: number;
-};
+export type SendPositionRequest = number;

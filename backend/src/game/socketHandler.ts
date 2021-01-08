@@ -3,9 +3,10 @@ import { Event, JoinRoomRequest, SendPositionRequest } from "./protocols";
 import { generateRoomCode } from "./util";
 import Player from "./Player";
 import Room from "./Room";
+import { socketHandler } from ".";
 
 interface CustomSocket extends Socket {
-  room: Room;
+  room: Room | undefined;
 }
 
 const rooms: Record<string, Room> = {};
@@ -36,6 +37,9 @@ export default function (io: Server) {
       const player = new Player(data.username, data.color, socket);
       const room = rooms[data.roomCode];
       if (room) {
+        if (room.getSize() > 4) {
+          io.to(socket.id).emit(Event.ErrorEncounted, {});
+        }
         socket.room = room;
         room.addPlayer(player);
         room.sendRoomDetails();
@@ -56,22 +60,23 @@ export default function (io: Server) {
 
     // User starts a game for the lobby
     socket.on(Event.StartGame, () => {
-      socket.room.startGame();
+      socket.room?.startGame();
     });
 
     // A player starts his game (e.g. char press)
     socket.on(Event.StartGame, () => {
-      socket.room.setPlayerStart(socket.id);
+      socket.room?.setPlayerStart(socket.id);
     });
 
     // A player finishes his game
     socket.on(Event.FinishGame, () => {
-      socket.room.setPlayerFinished(socket.id);
+      socket.room?.setPlayerFinished(socket.id);
     });
 
     // Update player positions for the room
-    socket.on(Event.SendPosition, (data: SendPositionRequest) => {
-      socket.room.updatePlayerPosition(socket.id, data.position);
+    socket.on(Event.SendPosition, (position: SendPositionRequest) => {
+      console.log(position);
+      socket.room?.updatePlayerPosition(socket.id, position);
     });
   });
 }
