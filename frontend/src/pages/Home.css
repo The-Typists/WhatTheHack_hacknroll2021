@@ -1,11 +1,12 @@
 .header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 5px;
 }
 .lobby-container {
-    background-color: #FFFAED;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
-    width: 80%;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px #9E9E9E;
+    width: 100%;
 }

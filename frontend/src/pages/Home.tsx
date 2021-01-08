@@ -48,14 +48,16 @@ const Home = () => {
           <thead>
           <tr>
             <th>S/N</th>
-            <th>Host</th>
+            <th>Room Code</th>
             <th>Capacity</th>
           </tr>
           </thead>
           <tbody>
           {
             rooms.map((room, index) =>
-                <tr>
+                <tr onClick={() => {
+                  history.push(`/room/${room.roomCode}`);
+                }}>
                   <td>{index}</td>
                   <td>{room.roomCode}</td>
                   <td>{room.size} / 5</td>
