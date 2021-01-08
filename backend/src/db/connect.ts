@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 export default function connect() {
-  const uri = `mongodb://${process.env.MONGO_HOST}/database`;
+  const uri = `mongodb+srv://${process.env.MONGO_HOST}/database?retryWrites=true&w=majority`;
+
   mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
