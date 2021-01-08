@@ -5,10 +5,9 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
-import useToken from "./tools/useToken";
 
 function App() {
-  const { token, setToken } = useToken();
+  const token = false;
 
   function NavBar() {
     return (
