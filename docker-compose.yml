@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: ["npm", "run", "start"]
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    command: ["npm", "run", "start"]
+    volumes:
+      - ./backend:/backend
+      - /backend/node_modules
+    ports:
+      - 8080:8080
+    environment:
+      - MONGO_HOST=db
+    depends_on:
+      - db
+  db:
+    image: mongo
+    restart: always
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:
