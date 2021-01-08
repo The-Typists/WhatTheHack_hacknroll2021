@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import LoginPage from "./pages/LoginPage";
@@ -8,6 +8,9 @@ import StatisticsPage from "./pages/StatisticsPage";
 import GameRoom from "./pages/GameRoom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Table from 'react-bootstrap/Table';
+import NavItem from "react-bootstrap/esm/NavItem";
 
 
 
@@ -20,44 +23,45 @@ function App() {
   }, []);
 
   function NavBar() {
+
+    const loggedOut = (
+      <Navbar bg="light">
+        <Nav className="mr-auto">
+          <Nav.Item>
+            <Nav.Link href="/signup"> Signup</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/login">Login</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Navbar>)
+
+
+    const loggedIn = (
+      <Navbar bg="light">
+        <Nav className="mr-auto">
+            <Nav.Item>
+            <Nav.Link href="/home"> Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/stats"> Statistics</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/game">Practice</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="" onClick={() => {
+              localStorage.clear();
+              setLoggedin(false);
+            }}>Logout</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Navbar>)
+
     return (
-      <Navbar>
         <ul>
-          {!isLoggedin ? (
-            <>
-              <li>
-                <Link to="/">Login</Link>
-              </li>
-              <li>
-                <Link to="/signup">Signup</Link>
-              </li>
-            </>
-          ) : (
-            <>
-            <li>
-                <Link to="/home">Home</Link>
-            </li>
-              <li>
-                <Link to="/stats">Statistics</Link>
-              </li>
-              <li>
-                <Link to="/game">Practice</Link>
-              </li>
-              <li>
-                <Link
-                  to=""
-                  onClick={() => {
-                    localStorage.clear();
-                    setLoggedin(false);
-                  }}
-                >
-                  Logout
-                </Link>
-              </li>
-            </>
-          )}
+          {!isLoggedin ? loggedOut : loggedIn}
         </ul>
-      </Navbar>
     );
   }
 
@@ -78,23 +82,23 @@ function App() {
             </Switch>
           </>
         ) : (
-          <>
-            <Switch>
+            <>
+              <Switch>
                 <Route path="/stats">
-                    <StatisticsPage />
+                  <StatisticsPage />
                 </Route>
                 <Route path="/game">
                     <GamePage />
                 </Route>
                 <Route exact path="/room/:code">
-                    <GameRoom />
+                  <GameRoom />
                 </Route>
                 <Route path="/">
                     <Home />;
                 </Route>
-            </Switch>
-          </>
-        )}
+              </Switch>
+            </>
+          )}
       </div>
     </Router>
   );
