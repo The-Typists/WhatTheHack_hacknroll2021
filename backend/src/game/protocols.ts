@@ -18,4 +18,19 @@ export type JoinRoomRequest = {
   roomCode: string;
 };
 
-export type SendPositionRequest = number;
+export type SendPositionRequest = {
+  position: number;
+  roomCode: string;
+  playerName: string;
+};
+
+export type RoomAndName = {
+  roomCode: string;
+  name: string;
+};
+
+export type RoomNameText = {
+  roomCode: string;
+  name: string;
+  text: string;
+};

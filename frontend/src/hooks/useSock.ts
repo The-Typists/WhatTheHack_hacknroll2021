@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+
+let socket: Socket | undefined = io("/");
+
 export const useSock = () => {
-  const [socket, setSocket] = useState<Socket | undefined>(undefined);
-
-  useEffect(() => {
-    if (!socket) {
-      setSocket(io("/"));
-    }
-  }, []);
-
   return socket;
 };

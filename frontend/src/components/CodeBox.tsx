@@ -3,26 +3,49 @@ import "./CodeBox.css";
 import { useSock } from "../hooks/useSock";
 import { Position } from "../pages/GameRoom";
 
-const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
-
 interface Props {
   text: string;
   positions: Position[];
   name: string;
+  roomCode: string;
 }
 
 export function CodeBox(props: Props) {
-  const { text, name } = props;
+  const { text, name, roomCode } = props;
   const socket = useSock();
   const positions = props.positions.filter(
     (pos) => pos.username !== name && pos.position !== 0
   );
+
   const [userPointer, setUserPointer] = useState(0);
   const pointerRef: any = useRef();
 
+  const positionMap: Record<number, string> = {};
+  positions.forEach((p) => (positionMap[p.position] = p.color));
+
+  const splitText = text.split("");
+
   useEffect(() => {
-    pointerRef.current = () => socket?.emit("send-position", userPointer);
+    pointerRef.current = () =>
+      socket?.emit("send-position", {
+        position: userPointer,
+        roomCode: roomCode,
+        playerName: name,
+      });
   });
+
+  useEffect(() => {
+    console.log(userPointer);
+    if (userPointer === 1) {
+      socket?.emit("player-start-game", { roomCode, name });
+      console.log("Start");
+    }
+
+    if (userPointer !== 0 && userPointer === splitText.length) {
+      socket?.emit("player-finish-game", { roomCode, name, text });
+      console.log("End");
+    }
+  }, [userPointer]);
 
   useEffect(() => {
     function sendPos() {
@@ -34,12 +57,6 @@ export function CodeBox(props: Props) {
     }
     return () => clearInterval(interval);
   }, [socket]);
-
-  const positionMap: Record<number, string> = {};
-  positions.forEach((p) => (positionMap[p.position] = p.color));
-
-  const splitText = text.split("");
-  console.log(positionMap);
 
   const renderOther = (color: string, c: string) => (
     <span style={{ backgroundColor: color }}>{c}</span>
@@ -58,7 +75,6 @@ export function CodeBox(props: Props) {
 
         if (isCorrectKeyPress) {
           setUserPointer((prev) => prev + 1);
-          //   console.log("Next Char is ", text[userPointer + 1]);
         }
       }}
       tabIndex={0}

@@ -68,11 +68,22 @@ const GameRoom = () => {
         setPositions(data.positions);
         setText(data.text);
       });
+
+      socket.on("send-position", (pos: Position) => {
+        console.log(pos);
+        setPositions((positions) =>
+          positions.map((position) => {
+            if (position.username === pos.username) return pos;
+
+            return position;
+          })
+        );
+      });
     }
   }, [socket]);
 
   const startGame = () => {
-    socket?.emit("start-game", {});
+    socket?.emit("start-game", code);
   };
 
   if (!gameStarted) {
@@ -103,7 +114,11 @@ const GameRoom = () => {
     );
   }
 
-  return <CodeBox text={text} positions={positions} name={name} />;
+  return (
+    <div>
+      <CodeBox roomCode={code} text={text} positions={positions} name={name} />
+    </div>
+  );
 };
 
 export default GameRoom;
