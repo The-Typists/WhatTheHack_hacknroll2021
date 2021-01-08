@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 function GamePage() {
   return (
@@ -28,16 +28,28 @@ function PracticeBox(props: any) {
     const {style} = props;
     const [ptr, setPtr] = useState(0);
 
+    const {
+        elapsedTime,
+        resetTimer,
+        startTimer,
+        stopTimer,
+    } = useStopwatch();
+
+
     return (
         <div className={"container"} style={{ margin: style.margin }}
              onKeyDown={(e) => {
+                 if (ptr == 0) {
+                     startTimer()
+                 }
                  const isCorrectKeyPress =
                      e.key == text[ptr] ||
                      (e.key == "Enter" && text[ptr] == "\n");
 
                  if(isCorrectKeyPress) {
                      setPtr(ptr + 1);
-                     console.log("Next Char is ", text[ptr + 1])
+                     if(ptr + 2 == text.length) stopTimer()
+
                  }
              }}
              tabIndex={0}
@@ -49,26 +61,56 @@ function PracticeBox(props: any) {
                 <span>{text.slice(ptr+1)}</span>
             </p>
 
-            <button onClick={() => setPtr(0)}>Reset</button>
+            <p>Time Elapsed : {elapsedTime}</p>
+            <button onClick={() => {
+                setPtr(0)
+                resetTimer()
+            }
+            }>Reset</button>
         </div>
     );
 }
-class Stopwatch {
-    interval: any;
-    timeElapsed = 0;
 
-    start() {
-        this.interval = setInterval(() => { this.timeElapsed += 1 }, 1)
-    }
-    reset() {
-        this.timeElapsed = 0;
-        clearInterval(this.interval);
-    }
-    stop() {
-        clearInterval(this.interval);
-    }
-    getElapsedTime() {
-        return this.timeElapsed;
-    }
-}
+export const useTimer = () => {
+    const [isRunning, setIsRunning] = useState(false);
+    const [elapsedTime, setElapsedTime] = useState(0);
+
+    useEffect(
+        () => {
+            let interval: NodeJS.Timeout;
+            if (isRunning) {
+                interval = setInterval(
+                    () => setElapsedTime(prevElapsedTime => prevElapsedTime + 0.1),
+                    100
+                );
+            }
+            return () => clearInterval(interval);
+        },
+        [isRunning]
+    );
+
+    return {
+        isRunning,
+        setIsRunning,
+        elapsedTime,
+        setElapsedTime
+    };
+};
+export const useStopwatch = () => {
+    const { isRunning, setIsRunning, elapsedTime, setElapsedTime } = useTimer();
+
+    const handleReset = () => {
+        setIsRunning(false);
+        setElapsedTime(0);
+    };
+
+    return {
+        elapsedTime: elapsedTime.toFixed(1),
+        resetTimer: () => handleReset(),
+        startTimer: () => setIsRunning(true),
+        stopTimer: () => setIsRunning(false),
+        // isRunning
+    };
+};
+
 export default GamePage;
