@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './CodeBox.css';
 import socketClient  from "socket.io-client";
+import { OppCursor } from "./OppCursor";
 
 const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
 
@@ -25,7 +26,6 @@ export function CodeBox(props: any) {
         })
     },[])
 
-
     return (
         <div className={"container"} style={{ margin: style.margin }}
              onKeyDown={(e) => {
@@ -37,7 +37,7 @@ export function CodeBox(props: any) {
                      setPtr(ptr + 1);
                      console.log("Next Char is ", text[ptr + 1])
                  }
-             }}
+             }} 
              tabIndex={0}
         >
             <p style={{
@@ -47,16 +47,21 @@ export function CodeBox(props: any) {
             }}>
 
                 <span style={{color:"red"}}>{text.slice(0,ptr)}</span>
+                <span>
                 <span style={{backgroundColor:"#FFE0AB"}}>{text[ptr]}</span>
+                </span>
+                
                 <span>{text.slice(ptr+1)}</span>
             </p>
+
+            {/*============= overlay====== */}
             <p style={{
                 whiteSpace: "pre-wrap",
                 zIndex: 100,
                 position: "relative"
             }}>
                 <span style={{opacity:0}}>{text.slice(0,opp[0])}</span>
-                <span style={{backgroundColor:"#FFE0AB"}}>{text[opp[0]]}</span>
+                <OppCursor playerPtr={ptr}character={text[opp[0]]} opp={opp} />
                 <span style={{opacity:0}}>{text.slice(opp[0]+1)}</span>
             </p>
         </div>

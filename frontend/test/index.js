@@ -31,7 +31,9 @@ io.on('connection', socket => {
 
     id = setInterval(() => {
         if(opp[0] < max) {
-            opp[0] += Math.floor(Math.random() * 10)
+            idx = Math.floor(Math.random() * 10)
+            opp[0] += idx
+            opp[1] += idx
             socket.emit('updatePos', opp)
         }
     },1000)
