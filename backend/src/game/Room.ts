@@ -31,6 +31,15 @@ class Room {
     this.players.push(player);
   }
 
+  sendRoomDetails() {
+    const playerDetails = this.players.map((player) => ({
+      username: player.username,
+      color: player.color,
+    }));
+    console.log(playerDetails);
+    this.io.to(this.name).emit(Event.PlayersInRoom, playerDetails);
+  }
+
   removePlayer(socketId: string) {
     let idx = 0;
     while (idx < this.players.length) {

@@ -32,11 +32,13 @@ export default function (io: Server) {
 
     // Add player to existing room
     socket.on(Event.JoinRoom, (data: JoinRoomRequest) => {
+      console.log(`Got request from ${data.username}`);
       const player = new Player(data.username, data.color, socket);
       const room = rooms[data.roomCode];
       if (room) {
         socket.room = room;
         room.addPlayer(player);
+        room.sendRoomDetails();
       }
     });
 
