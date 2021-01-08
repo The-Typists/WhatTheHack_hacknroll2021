@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { CodeBox } from "../components/CodeBox";
 
 function GamePage() {
   return (
@@ -53,5 +52,23 @@ function PracticeBox(props: any) {
             <button onClick={() => setPtr(0)}>Reset</button>
         </div>
     );
+}
+class Stopwatch {
+    interval: any;
+    timeElapsed = 0;
+
+    start() {
+        this.interval = setInterval(() => { this.timeElapsed += 1 }, 1)
+    }
+    reset() {
+        this.timeElapsed = 0;
+        clearInterval(this.interval);
+    }
+    stop() {
+        clearInterval(this.interval);
+    }
+    getElapsedTime() {
+        return this.timeElapsed;
+    }
 }
 export default GamePage;
