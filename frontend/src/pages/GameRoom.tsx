@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSock } from "../hooks/useSock";
 import { CodeBox } from "../components/CodeBox";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 interface Params {
   code: string;
@@ -75,12 +77,34 @@ const GameRoom = () => {
 
   if (!gameStarted) {
     return (
-      <div>
-        <h1>Gameroom {code}</h1>
-        {players.map((player) => (
-          <p style={{ color: player.color }}>{player.username}</p>
-        ))}
-        <button onClick={startGame}>Start game</button>
+      <div className="lobby-container">
+        <div className="header">
+          <h3>Gameroom {code}</h3>
+          <Button
+            onClick={() => {
+              // Start Game
+            }}
+          >
+            Start Game
+          </Button>
+        </div>
+
+        <Table striped bordered hover variant={"dark"}>
+          <thead>
+            <tr>
+              <th>S/N</th>
+              <th>Room Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            {players.map((player, index) => (
+              <tr style={{ color: player.color }}>
+                <td>{index}</td>
+                <td>{player.username}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   }

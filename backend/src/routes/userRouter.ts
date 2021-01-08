@@ -18,7 +18,7 @@ router.route("/add").post(async (req, res) => {
     const newUser = await User.createUser(username, password);
     res.json(newUser.toJSON());
   } catch (err) {
-    res.json("Error: " + err);
+    res.status(400).json("" + err);
   }
 });
 
@@ -54,7 +54,7 @@ router.route("/login").post((req, res) => {
             .then((user) => {
                 res.send(user)
             })
-            .catch((err) => res.status(400).send(err));
+            .catch((err: string) => res.status(400).send("" + err));
     }
 })
 
