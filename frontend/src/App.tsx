@@ -5,7 +5,6 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
-import useStickyState from "./tools";
 
 
 function App() {

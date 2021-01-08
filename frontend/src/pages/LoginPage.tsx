@@ -11,7 +11,6 @@ function LoginPage(props:any) {
             username,
             password
         }).then(res => {
-            if(res.)
             console.log(res)
             localStorage.setItem('user', JSON.stringify({}))
             // props.setLoggedin(true);
