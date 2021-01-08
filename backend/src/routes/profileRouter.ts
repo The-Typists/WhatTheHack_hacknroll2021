@@ -5,7 +5,13 @@ import { Profile } from "../models/Profile";
 const router = Router();
 
 router.route("/").get((req, res) => {
-    Profile.find()
+        Profile.find()
+            .then((profile: any) => res.json(profile))
+            .catch((err: any) => res.json("Error: " + err));
+})
+
+router.route("/:id").get((req, res) => {
+    Profile.findProfileByUserId(req.params.id)
         .then((profile: any) => res.json(profile))
         .catch((err: any) => res.json("Error: " + err));
 })
