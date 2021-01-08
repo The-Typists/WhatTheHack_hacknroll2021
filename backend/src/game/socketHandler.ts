@@ -3,7 +3,6 @@ import { Event, JoinRoomRequest, SendPositionRequest } from "./protocols";
 import { generateRoomCode } from "./util";
 import Player from "./Player";
 import Room from "./Room";
-import { socketHandler } from ".";
 
 interface CustomSocket extends Socket {
   room: Room;
@@ -19,6 +18,7 @@ export default function (io: Server) {
         size: rooms[key].getSize(),
       }));
       io.to(socket.id).emit(Event.GetRooms, sizes);
+      console.log(`Current room sizes are ${sizes}`);
     });
 
     // Generate room code for user
@@ -27,6 +27,7 @@ export default function (io: Server) {
 
       rooms[roomCode] = new Room(roomCode, io);
       io.to(socket.id).emit(Event.CreateRoom, roomCode);
+      console.log(`Room was created with ${roomCode}`);
     });
 
     // Add player to existing room
@@ -40,7 +41,8 @@ export default function (io: Server) {
     });
 
     // Remove player from room and delete the room if it is empty
-    socket.on(Event.Disconnect, () => {
+    socket.on("disconnect", (reason: string) => {
+      console.log(`A socket is disconnecting ${reason}`);
       const room = socket.room;
       if (room) {
         room.removePlayer(socket.id);

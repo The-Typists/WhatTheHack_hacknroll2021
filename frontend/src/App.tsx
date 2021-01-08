@@ -5,14 +5,19 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Home from "./pages/Home";
 import StatisticsPage from "./pages/StatisticsPage";
+import GameRoom from "./pages/GameRoom";
 
 
 function App() {
+<<<<<<< Updated upstream
   const [isLoggedin, setLoggedin] = useState(false);
   useEffect(() => {
       setLoggedin(!!localStorage.getItem('user'))
       console.log(localStorage.getItem('user'));
   },[])
+=======
+  const token = true;
+>>>>>>> Stashed changes
 
   function NavBar() {
     return (
@@ -69,8 +74,12 @@ function App() {
               <Route path="/stats">
                 <StatisticsPage />
               </Route>
-              <Route path="/">
+              <Route exact path="/">
+                <Home />;
                 <GamePage />
+              </Route>
+              <Route exact path="/room/:code">
+                <GameRoom />
               </Route>
             </Switch>
           </>
