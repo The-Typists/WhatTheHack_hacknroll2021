@@ -16,12 +16,12 @@ function SignupPage({ setLoggedin }: any) {
       })
       .then((res) => {
         console.log(res);
-          const userdata = {
-              id: res.data._id,
-              username: username,
-          };
-          localStorage.setItem("user", JSON.stringify(userdata));
-          setLoggedin(true);
+        const userdata = {
+          id: res.data._id,
+          username: username,
+        };
+        localStorage.setItem("user", JSON.stringify(userdata));
+        setLoggedin(true);
       })
       .catch((res) => {
         console.log(res);
