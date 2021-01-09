@@ -1,3 +1,4 @@
+// @ts-nocheck
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { UserDocument, User } from "./User";
 
@@ -132,7 +133,7 @@ profileSchema.statics.deleteCode = async function (
     throw new Error("No such code exists or it has already been removed.");
   } else {
     profileExists.listOfCode = profileExists.listOfCode.filter(
-      (c) => c !== code
+      (c: any) => c !== code
     );
 
     await profileExists.save();

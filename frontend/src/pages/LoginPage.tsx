@@ -15,7 +15,6 @@ function LoginPage(props: any) {
         password,
       })
       .then((res) => {
-        console.log(res);
         const userdata = {
           id: res.data._id,
           username: res.data.username,
@@ -27,8 +26,7 @@ function LoginPage(props: any) {
         console.log(res.response);
       });
   };
-  console.log(username);
-  console.log(password);
+
   return (
     <div
       style={{

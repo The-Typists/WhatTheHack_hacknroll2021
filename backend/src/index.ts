@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
-import connect from "./src/db/connect";
+import connect from "./db/connect";
 import bodyParser from "body-parser";
-
-import { profileRouter } from "./src/routes/profileRouter";
-import { usersRouter } from "./src/routes/userRouter";
+import path from "path";
+import { profileRouter } from "./routes/profileRouter";
+import { usersRouter } from "./routes/userRouter";
 import http from "http";
 import { Server } from "socket.io";
-import { socketHandler } from "./src/game";
+import { socketHandler } from "./game";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
 
@@ -19,9 +19,15 @@ app.use(bodyParser.json());
 app.use(cors());
 connect();
 app.use(express.json());
-app.get("/", (req, res) => res.send("Hellooo world"));
+
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/users", usersRouter);
 app.use("/profile", profileRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+});
 
 server.listen(PORT);
 
