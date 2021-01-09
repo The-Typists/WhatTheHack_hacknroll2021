@@ -56,3 +56,6 @@ When adding libraries to `frontend` or `backend` (E.g. `cd frontend && yarn inst
 
 Just use (2) to be safe.
 
+## Deployment
+
+The project is currently hosted on an AWS EC2 instance. Future plans are to serve up the static website with our Express backend.
