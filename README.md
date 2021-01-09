@@ -1,3 +1,5 @@
+You can view a working demo at https://code-wpm.herokuapp.com/home
+
 This represents the collective experience of 
 [Tan Kang Liang](https://github.com/tankangliang)
 [Jay Chua](https://github.com/nopenotj)
@@ -58,4 +60,4 @@ Just use (2) to be safe.
 
 ## Deployment
 
-The project is currently hosted on an AWS EC2 instance. Future plans are to serve up the static website with our Express backend.
+This project is deployed using Heroku
